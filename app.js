@@ -16,10 +16,10 @@ const connection = mysql.createConnection({
    database: process.env.DATABASE
 })
 
-connection.connect((err) => {
-   if (err)throw err;
-   console.log('Connected to MYSQL server')
-})
+// connection.connect((err) => {
+//    if (err)throw err;
+//    console.log('Connected to MYSQL server')
+// })
 
 app.use(bodyParser.json());
 
