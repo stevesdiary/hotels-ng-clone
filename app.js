@@ -1,34 +1,25 @@
 const  express = require ("express");
-const  Sequelize = require("sequelize");
+const  { Sequelize } = require("sequelize");
 const cloudinary = require("cloudinary").v2;
-const mysql = require('mysql2');
+const mysql = require('mysql');
+const env = require("dotenv").config();
 const fs = require('fs/promises');
-const fileUpload = require('express-fileupload');
 const cors = require ("cors");
+const helmet = require('helmet')
+const db = require('./config/db')
 const app = express();
 const path = require("path");
 const multer = require("multer");
 const bodyParser = require('body-parser');
-// const { storage } = require("googleapis/build/src/apis/storage");
 const port = process.env.LOCAL_PORT || 3000 ;
 require('dotenv').config();
-const connection = mysql.createConnection({
-   host: process.env.HOST,
-   port: process.env.PORT,
-   user: process.env.USERNAME,
-   password: process.env.PASSWORD,
-   database: process.env.DATABASE
-})
+
 cloudinary.config({
    cloud_name: process.env.CLOUD_NAME,
    api_key: process.env.CLOUDINARY_API_KEY,
    api_secret: process.env.CLOUDINARY_API_SECRET,
    secure: true,
 });
-connection.connect((err) => {
-   if (err)throw err;
-   console.log('Connected to MYSQL server')
-})
 const options = {
    use_filename: true,
    unique_filename: false,
@@ -48,7 +39,6 @@ const storage = multer.diskStorage({
 
 let upload = multer({
    storage: storage,
-   // dest: './uploads/',
    // limits: {fileSize: 1000000},
 })
 app.get('/', (req, res) => {
@@ -58,9 +48,9 @@ app.post('/upload', upload.single('image'), async(req, res) => {
    try {
       let imagePath = "./uploads/" + req.file.filename;
       
-      console.log('Upload status', imagePath)
+      // console.log('Upload status', imagePath)
       const result = await cloudinary.uploader.upload(imagePath, options);
-
+      console.log("Upload successful! Here's the image url: ", result.secure_url)
       await fs.unlink("./uploads/" + req.file.filename, (err) => {
          if (err) {
             console.error(err);
