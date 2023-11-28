@@ -60,7 +60,15 @@ app.post('/upload', upload.single('image'), async(req, res) => {
       
       console.log('Upload status', imagePath)
       const result = await cloudinary.uploader.upload(imagePath, options);
-      return res.status(200).send({message: "Upload Successful", result: result});
+
+      await fs.unlink("./uploads/" + req.file.filename, (err) => {
+         if (err) {
+            console.error(err);
+         }
+         console.log('File deleted successfully');
+      });
+      return res.status(200).send({message: "Upload Successful", result: result.secure_url});
+      
    }
    catch(err) {
       console.log(err)
