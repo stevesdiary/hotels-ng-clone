@@ -20,11 +20,14 @@
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "express-fileupload": "^1.4.3",
+    "fs.promises": "^0.1.2",
     "googleapis": "^128.0.0",
     "helmet": "^7.1.0",
     "http": "^0.0.1-security",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.6.3",
+    "path": "^0.12.7",
     "sequelize": "^6.35.1"
   }
 }
