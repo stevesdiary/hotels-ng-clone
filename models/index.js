@@ -41,3 +41,8 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 module.exports = db;
+
+
+// const dbConfig = require('../config/dbConfig');
+// const {Sequelize, DataTypes} = require('sequelize');
+// const sequelize = new Sequelize

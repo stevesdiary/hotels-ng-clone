@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-require("dotenv").config();
+// require("dotenv").config();
 const sequelize = new Sequelize(process.env.DATABASE, process.env.USERNAME, process.env.PASSWORD, {
     dialect: process.env.DIALECT || 'mysql',
     host: process.env.HOST
