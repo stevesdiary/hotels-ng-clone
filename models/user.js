@@ -24,25 +24,28 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-        last_name: {
-            type: DataTypes.STRING,
-            allowNull:false,
-        },
-        phone_number: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        type: {
-            type: DataTypes.ENUM('guest', 'regular', 'premium'),
-            allowNull: true,
-        }
+            last_name: {
+                type: DataTypes.STRING,
+                allowNull:false,
+            },
+            phone_number: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
+            email: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            type: {
+                type: DataTypes.ENUM('guest', 'regular', 'premium'),
+                allowNull: true,
+            }
     }, {
         sequelize,
+        tableName: 'user',
         modelName: 'User',
+        paranoid: true,
+        pluralize: false
     });
     return User;
 };
