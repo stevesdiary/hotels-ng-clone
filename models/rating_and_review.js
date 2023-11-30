@@ -28,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUIDV4,
         allowNull: false,
       },
+      like: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
       review_title: {
         type: DataTypes.STRING,
         allowNull: false,
