@@ -16,12 +16,12 @@ module.exports = (sequelize, DataTypes) => {
   Room.init(
     {
       room_id: {
-        type: DataTypes.UUIDV4,
+        type: DataTypes.UUID,
         allowNull: false,
         primaryKey: true,
       },
       hotel_id: {
-        type: DataTypes.UUIDV4,
+        type: DataTypes.UUID,
         allowNull: false,
       },
       category: {

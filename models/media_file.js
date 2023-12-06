@@ -16,16 +16,16 @@ module.exports = (sequelize, DataTypes) => {
   Media_file.init(
     {
       file_id: {
-        type: DataTypes.UUIDV4,
+        type: DataTypes.UUID,
         allowNull: false,
         primaryKey: true,
       },
       hotel_id: {
-        type: DataTypes.UUIDV4,
+        type: DataTypes.UUID,
         allowNull: false,
       },
       room_id: {
-        type: DataTypes.UUIDV4,
+        type: DataTypes.UUID,
         allowNull: false,
       },
       file_url: DataTypes.STRING,
@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      tableName: "media_file",
+      tableName: "Media_files",
       modelName: "Media_file",
       paranoid: true,
       pluralize: false,

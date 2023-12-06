@@ -8,12 +8,13 @@ const cors = require ("cors");
 const helmet = require('helmet')
 const db = require('./config/dbConfig')
 const app = express();
+const user_route = require("./routes/user");
 const path = require("path");
 const multer = require("multer");
 const bodyParser = require('body-parser');
 const port = process.env.LOCAL_PORT || 3000 ;
 require('dotenv').config();
-
+// const routes = require("./routes");
 cloudinary.config({
    cloud_name: process.env.CLOUD_NAME,
    api_key: process.env.CLOUDINARY_API_KEY,
@@ -41,6 +42,7 @@ let upload = multer({
    storage: storage,
    // limits: {fileSize: 1000000},
 })
+app.use('/', user_route);
 app.get('/', (req, res) => {
    res.send("Description.")
 })
@@ -68,3 +70,5 @@ app.post('/upload', upload.single('image'), async(req, res) => {
 app.listen(port, async() => {
    console.log('App running on port: ' + port)
 })
+
+module.exports = app

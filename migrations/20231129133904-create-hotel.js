@@ -10,7 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       hotel_id: {
-        type: Sequelize.UUIDV4
+        type: Sequelize.UUID
       },
       name: {
         type: Sequelize.STRING

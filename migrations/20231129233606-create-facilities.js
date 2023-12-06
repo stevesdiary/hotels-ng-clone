@@ -5,15 +5,14 @@ module.exports = {
     await queryInterface.createTable('Facilities', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
       },
       facility_id: {
-        type: Sequelize.UUIDV4
+        type: Sequelize.UUID
       },
       hotel_id: {
-        type: Sequelize.UUIDV4
+        type: Sequelize.UUID
       },
       restaurant: {
         type: Sequelize.STRING

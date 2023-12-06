@@ -5,15 +5,14 @@ module.exports = {
     await queryInterface.createTable('Rating_and_reviews', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
       },
       hotel_id: {
-        type: Sequelize.UUIDV4
+        type: Sequelize.UUID
       },
       user_id: {
-        type: Sequelize.UUIDV4
+        type: Sequelize.UUID
       },
       review_title: {
         type: Sequelize.STRING

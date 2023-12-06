@@ -5,18 +5,17 @@ module.exports = {
     await queryInterface.createTable('Media_files', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
       },
       file_id: {
-        type: Sequelize.UUIDV4
+        type: Sequelize.UUID
       },
       hotel_id: {
-        type: Sequelize.UUIDV4
+        type: Sequelize.UUID
       },
       room_id: {
-        type: Sequelize.UUIDV4
+        type: Sequelize.UUID
       },
       file_url: {
         type: Sequelize.STRING

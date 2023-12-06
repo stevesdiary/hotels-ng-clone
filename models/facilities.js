@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Facilities.init({
-    facility_id: DataTypes.UUIDV4,
-    hotel_id: DataTypes.UUIDV4,
+    facility_id: DataTypes.UUID,
+    hotel_id: DataTypes.UUID,
     restaurant: DataTypes.STRING,
     bar_launge: DataTypes.BOOLEAN,
     security: DataTypes.BOOLEAN,
