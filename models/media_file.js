@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Media_file.belongsToMany(models.Hotel, {as: "media_files"});
     }
   }
   Media_file.init(

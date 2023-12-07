@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Rating_and_review.belongsToMany(models.Hotel, {foreignKey: hotel_id, as: "rating and reviews"});
     }
   }
   Rating_and_review.init(

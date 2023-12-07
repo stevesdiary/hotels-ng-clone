@@ -46,7 +46,7 @@ app.use('/', user_route);
 app.get('/', (req, res) => {
    res.send("Description.")
 })
-app.post('/upload', upload.single('image'), async(req, res) => {
+app.post('/upload', upload.single('image', { folder: "hotels-ng" },), async(req, res) => {
    try {
       let imagePath = "./uploads/" + req.file.filename;
       

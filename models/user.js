@@ -12,6 +12,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+        User.hasMany(models.Rating_and_review, { foreignKey:{ name: User_id, type: DataTypes.UUID }});
+        
     }
     }
     User.init(
@@ -24,22 +26,43 @@ module.exports = (sequelize, DataTypes) => {
             first_name: {
                 type: DataTypes.STRING,
                 allowNull: false,
+                validate: {
+                    notNull: {
+                        msg: 'First name cannot be null.',
+                    },
+                },
             },
             last_name: {
                 type: DataTypes.STRING,
                 allowNull:false,
+                validate: {
+                    notNull: {
+                        msg: 'Last name cannot be null.',
+                    },
+                },
             },
             phone_number: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
+                validate: {
+                    notNull: {
+                        msg: 'Phone number cannot be null.',
+                    },
+                },
             },
             email: {
                 type: DataTypes.STRING,
                 allowNull: false,
+                validate: {
+                    notNull: {
+                        msg: 'Email cannot be null.',
+                    },
+                },
             },
             type: {
                 type: DataTypes.ENUM('guest', 'regular', 'premium'),
                 allowNull: true,
+                defaultValue: 'regular'
             }
     }, {
         sequelize,
