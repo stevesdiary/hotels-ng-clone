@@ -1,3 +1,7 @@
+/** 
+ *
+*/
+
 "use strict";
 const { Model, DataTypes } = require("sequelize");
 
@@ -5,10 +9,10 @@ module.exports = (sequelize, DataTypes) => {
   class Hotel extends Model {
     static associate(models) {
       // define association here
-      Hotel.hasMany(models.Room, {foreignKey: {name: hotel_id, type: DataTypes.UUID }});
-      Hotel.hasMany(models.Facilities, {foreignKey: { name: hotel_id, type: DataTypes.UUID }});
-      Hotel.hasMany(models.Media_file, {foreignKey: { name: hotel_id, type: DataTypes.UUID }});
-      Hotel.hasMany(models.Ratings_and_review, {foreignKey: {name: hotel_id, type: DataTypes.UUID }});
+      Hotel.hasMany(models.Room, { foreignKey: 'hotel_id', type: DataTypes.UUID, as: 'rooms' });
+      // Hotel.hasMany(models.Facilities, { foreignKey: 'hotel_id', type: DataTypes.UUID });
+      // Hotel.hasMany(models.Media_file, { foreignKey: 'hotel_id', type: DataTypes.UUID });
+      // Hotel.hasMany(models.Ratings_and_review, { foreignKey: 'hotel_id', type: DataTypes.UUID });
     }
   }
 
@@ -65,7 +69,7 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "Hotels",
       modelName: "Hotel",
       paranoid: true,
-      pluralize: false,
+      
     }
   );
 

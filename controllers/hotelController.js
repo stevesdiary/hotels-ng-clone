@@ -1,0 +1,76 @@
+const { v4: uuidv4 } = require('uuid');
+const { Hotel, Room } = require('../models');
+const room = require('../models/room');
+
+exports.createHotel = async (req, res) => {
+  try{
+    const id = uuidv4();
+    const { name, address, city, state, description, hotel_type, number_of_rooms, contact_email, contact_phone, terms_and_condition } = req.body;
+    const createHotel = await Hotel.create({id, name, address, city, state, description, hotel_type, number_of_rooms, contact_email, contact_phone, terms_and_condition});
+    console.log('Record created', createHotel);
+    return res.status(201).send({message: 'Record created.', data: createHotel})
+  }
+  catch(err){
+    return res.status(500).send({ message: 'An error occoured', err})
+  }
+};
+
+exports.findAllHotel = async (req, res) => {
+  try{
+    const hotels = await Hotel.findAll();
+    return res.status(200).send({message: `Hotel record found.`, data: hotels})
+  } catch(err){
+    return res.status(500).send({message: 'An error occoured', err});
+  }
+}
+exports.findOneHotel = async (req, res) => {
+  try{
+    const id = req.params.id;
+    const hotel = await Hotel.findOne({
+      where: {id},
+      logging: true,
+        include: [
+          {
+            model: Room,
+            as: 'rooms',
+            required: false
+          }
+        ]
+    });
+    // console.log('record found')
+    return res.status(200).send({message: `Hotel record found.`, data: hotel})
+  } catch(err){
+    return res.status(500).send({message: 'An error occoured', err});
+  }
+}
+
+exports.updateHotel = async (req, res) => {
+  try{
+    const id = req.params.id;
+    const {name, address, city, state, description, hotel_type, number_of_rooms, contact_email, contact_phone, terms_and_condition } = req.body;
+    const updateUser = await Hotel.update({ name, address, city, state, description, hotel_type, number_of_rooms, contact_email, contact_phone, terms_and_condition}, {where: {id}});
+    console.log('Record updated', createHotel);
+    if(updateUser == 1){
+      return res.status(201).send({message: 'Record created.', data: createHotel});
+    } 
+  }
+  catch(err){
+    return res.status(500).send({message: 'An error occoured', err});
+  }
+};
+
+exports.deleteHotel = async (req, res) => {
+  try{
+    const id = req.params.id;
+    const hotel = await Hotel.destroy({where: {id}});
+    if (hotel == 1 ){
+      return res.send({message: `User with id ${id} has been deleted successfully!`})
+    }
+    if(hotel == 0){
+      return res.send({message: `User ${id} does not exist or is deleted in the database`})
+    }
+  }
+  catch(err){
+    return res.status(500).send({message: 'An error occoured', err});
+  }
+};

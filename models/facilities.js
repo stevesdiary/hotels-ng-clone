@@ -10,12 +10,15 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
-      Facilities.belongsToMany(models.Hotel, {as: "facilities"})
+      Facilities.belongsTo(models.Hotel, { foreignKey: 'hotel_id' });
     }
   }
   Facilities.init({
-    facility_id: DataTypes.UUID,
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      allowNull: false,
+    },
     hotel_id: DataTypes.UUID,
     restaurant: DataTypes.STRING,
     bar_launge: DataTypes.BOOLEAN,
@@ -32,7 +35,9 @@ module.exports = (sequelize, DataTypes) => {
     car_park: DataTypes.BOOLEAN
   }, {
     sequelize,
+    tableName: 'Facilities',
     modelName: 'Facilities',
+    paranoid: true,
   });
   return Facilities;
 };

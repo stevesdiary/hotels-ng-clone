@@ -11,11 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // Room.belongsTo(models.Hotel, { foreignKey: 'hotel_id' });
     }
   }
   Room.init(
     {
-      room_id: {
+      id: {
         type: DataTypes.UUID,
         allowNull: false,
         primaryKey: true,
@@ -61,8 +62,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      tableName: 'room',
-      modelName: "Room",
+      tableName: 'Rooms',
+      modelName: 'Room',
       paranoid: true,
       pluralize: false,
     }

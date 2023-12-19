@@ -1,3 +1,6 @@
+/**
+ * @param {string}
+ */
 const  express = require ("express");
 const  { Sequelize } = require("sequelize");
 const cloudinary = require("cloudinary").v2;
@@ -5,12 +8,15 @@ const mysql = require('mysql2');
 const env = require("dotenv").config();
 const fs = require('fs/promises');
 const cors = require ("cors");
-const helmet = require('helmet')
-const db = require('./config/dbConfig')
+const helmet = require('helmet');
+const db = require('./config/dbConfig');
 const app = express();
 const user_route = require("./routes/user");
+const hotel_route = require('./routes/hotel');
+const room_route = require('./routes/room')
 const path = require("path");
 const multer = require("multer");
+const fileUpload = require('express-fileupload');
 const bodyParser = require('body-parser');
 const port = process.env.LOCAL_PORT || 3000 ;
 require('dotenv').config();
@@ -29,6 +35,7 @@ const options = {
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.use(fileUpload({ useTempFiles: true, tempFileDir: '/tmp/' }))
 const storage = multer.diskStorage({
    destination: function (req, file, cb) {
       cb(null, './uploads');
@@ -43,6 +50,8 @@ let upload = multer({
    // limits: {fileSize: 1000000},
 })
 app.use('/', user_route);
+app.use('/', hotel_route);
+app.use('/', room_route);
 app.get('/', (req, res) => {
    res.send("Description.")
 })

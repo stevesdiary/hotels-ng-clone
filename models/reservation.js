@@ -11,9 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Reservation.hasMany(models.Hotel, {foreignKey: {name: reservation_id, type: DataTypes.UUID, }, as: 'hotels'});
-      Reservation.hasMany(models.User, {foreignKey: {name: reservation_id, type: DataTypes.UUID }, as: 'users'});
-      Reservation.hasMany(models.Room, {foreignKey: {name: reservation_id, type: DataTypes.UUID }, as: 'rooms'});
+      Reservation.hasMany(models.Hotel, {foreignKey: 'id', type: DataTypes.UUID, });
+      Reservation.hasMany(models.User, {foreignKey: 'id', type: DataTypes.UUID });
+      Reservation.hasMany(models.Room, {foreignKey: 'id', type: DataTypes.UUID });
     }
   }
   Reservation.init({

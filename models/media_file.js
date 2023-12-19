@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Media_file.belongsToMany(models.Hotel, {as: "media_files"});
+      Media_file.belongsTo(models.Room, { foreignKey: 'room_id' });
     }
   }
   Media_file.init(
@@ -34,10 +34,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      tableName: "Media_files",
+      tableName: "Media_file",
       modelName: "Media_file",
       paranoid: true,
-      pluralize: false,
     }
   );
   return Media_file;

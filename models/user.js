@@ -12,25 +12,25 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-        User.hasMany(models.Rating_and_review, { foreignKey:{ name: User_id, type: DataTypes.UUID }});
-        
+        User.hasMany(models.RatingAndReview, { foreignKey: 'User_id', type: DataTypes.UUID });
+
     }
     }
     User.init(
         {
-            id: {
-                type: DataTypes.UUID,
-                primaryKey: true,
-                // defaultValue: DataTypes.UUIDV4
+          id: {
+              type: DataTypes.UUID,
+              primaryKey: true,
+              // defaultValue: DataTypes.UUIDV4
+          },
+          first_name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+              notNull: {
+                msg: 'First name cannot be null.',
+              },
             },
-            first_name: {
-                type: DataTypes.STRING,
-                allowNull: false,
-                validate: {
-                    notNull: {
-                        msg: 'First name cannot be null.',
-                    },
-                },
             },
             last_name: {
                 type: DataTypes.STRING,
