@@ -54,7 +54,7 @@ const facilityController = {
     try{
       const hotel_id = req.params.hotel_id;
       const facility = await Facilities.findOne({where: {hotel_id}});
-      return res.status(200).send({message: })
+      return res.status(200).send({message: "Record found", facility });
     }
     catch(err){
       return res.status(500).send({message: 'Error occoured!', Error: err});
