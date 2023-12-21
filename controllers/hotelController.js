@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const { Hotel, Room } = require('../models');
-const room = require('../models/room');
+// const room = require('../models/room');
 
 const hotelController = {
   createHotel: async (req, res) => {
@@ -77,4 +77,4 @@ const hotelController = {
     }
   }
 }
-module.exports
+module.exports = hotelController;
