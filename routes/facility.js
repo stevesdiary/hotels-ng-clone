@@ -8,6 +8,8 @@ router.post('/createfacility', facilityController.createFacility);
 
 router.get('/findfacility/:hotel_id', facilityController.getFacility);
 
+router.get('/findfacilities', facilityController.getAllFacilities);
+
 router.put('/facility/:id', facilityController.updateFacility);
 
 router.delete('/facility/:id', facilityController.deleteFacility);

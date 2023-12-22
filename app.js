@@ -13,7 +13,8 @@ const db = require('./config/dbConfig');
 const app = express();
 const user_route = require("./routes/user");
 const hotel_route = require('./routes/hotel');
-const room_route = require('./routes/room')
+const room_route = require('./routes/room');
+const facility_route = require('./routes/facility');
 const path = require("path");
 const multer = require("multer");
 const fileUpload = require('express-fileupload');
@@ -52,6 +53,8 @@ let upload = multer({
 app.use('/', user_route);
 app.use('/', hotel_route);
 app.use('/', room_route);
+app.use('/', facility_route);
+
 app.get('/', (req, res) => {
    res.send("Description.")
 })

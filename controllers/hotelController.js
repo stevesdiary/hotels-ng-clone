@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
-const { Hotel, Room } = require('../models');
+const { Hotel, Room, Facilities } = require('../models');
 // const room = require('../models/room');
 
 const hotelController = {
@@ -30,14 +30,34 @@ const hotelController = {
       const id = req.params.id;
       const hotel = await Hotel.findOne({
         where: {id},
-        logging: true,
+      //   attibutes: {include: ["name",
+      //   "address",
+      //   "city",
+      //   "state",
+      //   "description",
+      //   "hotel_type",
+      //   "number_of_rooms",
+      //   "contact_email",
+      //   "contact_phone",
+      //   "terms_and_condition",],
+      // exclude: 'id'} ,
+        // logging: true,
           include: [
             {
               model: Room,
               as: 'rooms',
+              // attibutes: {
+              //   include: [ 'category', 'capacity', 'check_out', 'description', 'availability', 'price', 'condition'],
+              //   exclude: [ 'id', 'hotel_id', 'createdAt', 'updatedAt', 'deletedAt']
+              // }
+            },
+            {
+              model: Facilities,
+              as: 'facilities',
               required: false
             }
-          ]
+          ],
+          
       });
       // console.log('record found')
       return res.status(200).send({message: `Hotel record found.`, data: hotel})
