@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Rating_and_reviews', {
+    await queryInterface.createTable('RatingAndReview', {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -41,6 +41,9 @@ module.exports = {
       security: {
         type: Sequelize.INTEGER
       },
+      location: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -52,6 +55,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Rating_and_reviews');
+    await queryInterface.dropTable('RatingAndReview');
   }
 };

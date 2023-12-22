@@ -12,7 +12,6 @@ const roomController = {
       const check_out = req.body.check_out;
       console.log(check_in, check_out)
       console.log(hotel_id, email, "Here is the hotel ID", req.body)
-      console.log('Did you get here at all?!')
       const room = await Room.create({id, hotel_id, category, capacity, check_in, check_out, description, availability, price, condition});
       console.log('Data created', room)
       return res.status(201).send({message: 'Room created successfully', room})
