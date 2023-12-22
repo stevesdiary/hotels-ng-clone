@@ -29,10 +29,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         allowNull: false,
       },
-      like: {
-        type: DataTypes.BOOLEAN,
-        allowNull: true,
-      },
       review_title: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -49,6 +45,10 @@ module.exports = (sequelize, DataTypes) => {
       review: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      like: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
       },
       overallRating: {
         type: DataTypes.INTEGER,
