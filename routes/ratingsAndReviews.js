@@ -7,6 +7,7 @@ const ratingsAndReviewsController = require('../controllers/ratingsAdnReviewCont
 
 router.post('/createrating/:user_id', ratingsAndReviewsController.createRating);
 router.get('/getratings', ratingsAndReviewsController.getRatings);
+router.post('/like', ratingsAndReviewsController.like)
 router.put('/updaterating/:id', ratingsAndReviewsController.updateRating);
 router.delete('/deleterating/:id', ratingsAndReviewsController.deleteRating);
 

@@ -21,7 +21,47 @@ const ratingsAdnReviewController = {
       return res.status(500).send({message: 'Error occoured', Error: err})
     }
   },
+  // Transaction = await DBSERVICE.DatabaseTransaction().createTransaction();
+  //     const { id, user_id } = req.body;=  
+  //     const user = await DBSERVICE.Users.getOne({ where: { id: user_id } });
+  //     const event = await eventService.Event.getEvent(id);
+  //     if (user) {
+  //       // console.log('USER:', user, 'USER_ID:', user.dataValues.id);
+  //     }
+  //     if (!event.data.dataValues) {
+  //       return res.status(404).json({ message: 'Event_id not found.' });
+  //     }
+  //     if (!user) {
+  //       return res.status(404).json({ message: 'User_id not found.' });
+  //     }
+      // Check if the user has already liked the event
+      // const existingLike = await Like.findOne({
+      //   where: { user_id, event_id: id },
+      // });
+      // if (existingLike) {
+      //   return res
+      //     .status(403)
+      //     .json({ returnErrorMessage, message: 'User already liked the event.' });
+      // }
+      // if (!existingLike && (user_id && id)) {
+      //   await Like.create({
+      //     user_id, event_id: id, liked: 1, deleted_at: null,
+      //   },
 
+  like: async (req, res) => {
+    try{
+      const {id, hotel_id, user_id} =  req.body;
+      const likeExists = await RatingAndReview.findOne({where: {hotel_id, user_id}});
+      if(likeExists){
+        
+      }
+      const like = await RatingAndReview.updateRating({like}, {where: user_id, hotel_id});
+      
+    }
+    catch(err){
+      return res.status(500).send({message: 'Error occoured', Error: err})
+    }
+  },
   getRatings: async (req, res) => {
     try{
       const ratings = await RatingAndReview.findAll();
