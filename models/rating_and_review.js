@@ -11,13 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // Rating_and_review.belongsToMany(models.Hotel, {foreignKey: hotel_id, as: "rating and reviews"});
-      RatingAndReview.belongsTo(models.Hotel, { foreignKey: 'hotel_id' });
+      // Rating_and_review.belongsToMany(models.Hotel, {foreignKey: hotel_id, as: 'rating'});
+      // RatingAndReview.belongsTo(models.Hotel, { foreignKey: 'hotel_id' });
     }
   }
   RatingAndReview.init(
     {
-      rate_id: {
+      id: {
         type: DataTypes.UUID,
         allowNull: false,
         primaryKey: true,
@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       like: {
-        type: DataTypes.STRING,
+        type: DataTypes.BOOLEAN,
         allowNull: true,
       },
       review_title: {
@@ -51,9 +51,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      overall_rating: {
+      overallRating: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       cleanliness: {
         type: DataTypes.INTEGER,
@@ -68,6 +68,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       security: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      location: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },

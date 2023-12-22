@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Media_file extends Model {
+  class MediaFile extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,12 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Media_file.belongsTo(models.Room, { foreignKey: 'room_id' });
+      MediaFile.belongsTo(models.Room, { foreignKey: 'room_id' });
     }
   }
-  Media_file.init(
+  MediaFile.init(
     {
-      file_id: {
+      id: {
         type: DataTypes.UUID,
         allowNull: false,
         primaryKey: true,
@@ -34,10 +34,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      tableName: "Media_file",
-      modelName: "Media_file",
+      tableName: "MediaFile",
+      modelName: "MediaFile",
       paranoid: true,
     }
   );
-  return Media_file;
+  return MediaFile;
 };
