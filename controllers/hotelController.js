@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
-const { Hotel, Room, Facilities } = require('../models');
+const { Hotel, Room, Facilities, RatingAndReview, Reservation } = require('../models');
+const ratingAndReview = require('../models/ratingAndReview');
 // const room = require('../models/room');
 
 const hotelController = {
@@ -55,7 +56,17 @@ const hotelController = {
               model: Facilities,
               as: 'facilities',
               required: false
-            }
+            },
+            {
+              model: RatingAndReview,
+              as: 'ratingAndReview',
+              required: false
+            },
+            // {
+            //   module: Reservation,
+            //   as: 'reservation',
+            //   required: false
+            // }
           ],
           
       });

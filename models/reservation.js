@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       defaultValue: UUIDV4,
     },
-    hotel: {
+    hotel_id: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -31,7 +31,11 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    room: {
+    user_id: {
+      type: DataTypes.UUIDV4,
+      allowNull: false,
+    },
+    room_id: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {

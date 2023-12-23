@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       Hotel.hasMany(models.Facilities, { foreignKey: 'hotel_id', type: DataTypes.UUID, as: 'facilities' });
       // Hotel.hasMany(models.Media_file, { foreignKey: 'hotel_id', type: DataTypes.UUID });
       Hotel.hasMany(models.RatingAndReview, { foreignKey: 'hotel_id', type: DataTypes.UUID, as: 'ratingAndReview' });
+      Hotel.hasMany(models.Reservation, { foreignKey: 'hotel_id', type: DataTypes.UUID, as: 'reservation' });
     }
   }
 

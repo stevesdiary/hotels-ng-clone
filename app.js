@@ -16,6 +16,7 @@ const hotel_route = require('./routes/hotel');
 const room_route = require('./routes/room');
 const facility_route = require('./routes/facility');
 const ratings_route = require('./routes/ratingsAndReviews');
+const reservation_route = require('./routes/reservation');
 const path = require("path");
 const multer = require("multer");
 const fileUpload = require('express-fileupload');
@@ -56,6 +57,7 @@ app.use('/', hotel_route);
 app.use('/', room_route);
 app.use('/', facility_route);
 app.use('/', ratings_route);
+app.use('/', reservation_route);
 app.get('/', (req, res) => {
    res.send("Description.")
 })
