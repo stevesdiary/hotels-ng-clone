@@ -8,11 +8,12 @@ const user = require('../models/user');
 const reservationController = {
   createReservation: async (req, res) => {
     try{
-      const date = moment().format("YYYY-MM-DD hh:mm:ss");
-      console.log(date);
-      const { hotel_id, room_id, user_id, payment_status } = req.body;
+      // const date = moment().format("YYYY-MM-DD hh:mm:ss");
+      
+      const { hotel_id, room_id, user_id, date_in, date_out, payment_status } = req.body;
+      console.log(date_in, date_out);
       const id = uuidv4();
-      const reservation = await Reservation.create({ id, hotel_id, room_id, user_id, date, payment_status });
+      const reservation = await Reservation.create({ id, hotel_id, room_id, user_id, date_in, date_out, payment_status });
       if(reservation){
         return res.status(201).send({ message: `Reservation creatd with id: ${id}`, Record: reservation } )
       }
@@ -70,8 +71,6 @@ const reservationController = {
       return res.status(500).send({message: `There was an error.`, err});
     }
   }
-  
-
 }
 
 module.exports = reservationController;

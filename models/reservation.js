@@ -44,7 +44,15 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    date: DataTypes.DATE,
+    date_in: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    date_out: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+
     payment_status: DataTypes.BOOLEAN
   }, {
     sequelize,
