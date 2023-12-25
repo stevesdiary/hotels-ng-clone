@@ -1,8 +1,9 @@
 const { v4: uuidv4 } = require('uuid');
 
-const { Reservation } = require('../models');
+const { Reservation, User } = require('../models');
 const { Model } = require('sequelize');
 const moment = require('moment');
+const user = require('../models/user');
 
 const reservationController = {
   createReservation: async (req, res) => {
@@ -24,8 +25,19 @@ const reservationController = {
   getOne: async (req, res) => {
     try{
       const id = req.params.id;
-      const reservation = await Reservation.findOne({ where: { id }});
-      if (reservation == 1) {
+      const reservation = await Reservation.findOne({ 
+        where: { id },
+        // include: [
+        //   {
+        //     model: User,
+        //     as: 'user',
+        //     // required: false,
+        //     // attibutes: ['first_name', 'last_name']
+            
+        //   }
+        // ]
+      });
+      if (reservation) {
         return res.status(500).send({message: `Reservation record found`, Reservation: reservation});
       }
       if(reservation == 0){
@@ -47,10 +59,10 @@ const reservationController = {
       const reservations = await Reservation.findAll();
       // return res.status(500).send({message: `Reservation record found`, Reservation: reservation});
     
-      if (reservations == 1) {
+      if (reservations) {
         return res.status(500).send({message: `Reservation records found`, Reservation: reservations});
       }
-      if(reservations == 0){
+      if(reservations.count == 0){
         return res.send({message: `Reservation with id ${id} does not exist or is deleted in the database`});
       }
     }

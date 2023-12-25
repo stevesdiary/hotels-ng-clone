@@ -96,10 +96,10 @@ const hotelController = {
     try{
       const id = req.params.id;
       const hotel = await Hotel.destroy({where: {id}});
-      if (hotel == 1 ){
+      if ( hotel == 1 ){
         return res.send({message: `User with id ${id} has been deleted successfully!`})
       }
-      if(hotel == 0){
+      if( hotel == 0){
         return res.send({message: `User ${id} does not exist or is deleted in the database`})
       }
     }
