@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 
-const { Reservation, User } = require('../models');
+const { Reservation, User, Room, Hotel, Facilities } = require('../models');
 const { Model } = require('sequelize');
 const moment = require('moment');
 const user = require('../models/user');
@@ -28,15 +28,39 @@ const reservationController = {
       const id = req.params.id;
       const reservation = await Reservation.findOne({ 
         where: { id },
-        // include: [
-        //   {
-        //     model: User,
-        //     as: 'user',
-        //     // required: false,
-        //     // attibutes: ['first_name', 'last_name']
-            
-        //   }
-        // ]
+        attributes: {
+          exclude: [ 'createdAt', 'updatedAt', 'deletedAt']
+        },
+        include: [
+          {
+            model: User,
+            attributes: {
+              // include: [ 'first_name', 'last_name' ],
+              exclude: ['id', 'createdAt', 'updatedAt', 'deletedAt']
+            }
+          },
+          {
+            model: Hotel,
+            attributes: {
+              exclude: [ 'id', 'description', 'terms_and_condition', 'createdAt', 'updatedAt', 'deletedAt' ]
+            },
+            // include: [
+            //   {
+            //     model: Facilities,
+            //     attributes: {
+            //       exclude: ['id', 'hotel_id', 'createdAt', 'updatedAt', 'deletedAt']
+            //     }
+            //   }
+            // ]
+          },
+          {
+            model: Room,
+            attributes: {
+              exclude: [ 'id', 'hotel_id', 'createdAt', 'updatedAt', 'deletedAt']
+            }
+          },
+          
+        ]
       });
       if (reservation) {
         return res.status(500).send({message: `Reservation record found`, Reservation: reservation});
@@ -57,7 +81,41 @@ const reservationController = {
 
   getAll: async ( req, res ) => {
     try{
-      const reservations = await Reservation.findAll();
+      const reservations = await Reservation.findAll({
+        attributes: {
+          exclude: [ 'createdAt', 'updatedAt', 'deletedAt']
+        },
+        include: [
+          {
+            model: User,
+            attributes: {
+              // include: [ 'first_name', 'last_name' ],
+              exclude: ['id', 'createdAt', 'updatedAt', 'deletedAt']
+            }
+          },
+          {
+            model: Hotel,
+            attributes: {
+              exclude: [ 'id', 'description', 'terms_and_condition', 'createdAt', 'updatedAt', 'deletedAt' ]
+            },
+            // include: [
+            //   {
+            //     model: Facilities,
+            //     attributes: {
+            //       exclude: ['id', 'hotel_id', 'createdAt', 'updatedAt', 'deletedAt']
+            //     }
+            //   }
+            // ]
+          },
+          {
+            model: Room,
+            attributes: {
+              exclude: [ 'id', 'hotel_id', 'createdAt', 'updatedAt', 'deletedAt']
+            }
+          },
+          
+        ]
+      });
       // return res.status(500).send({message: `Reservation record found`, Reservation: reservation});
     
       if (reservations) {
