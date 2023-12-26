@@ -11,7 +11,9 @@ const cors = require ("cors");
 const helmet = require('helmet');
 const db = require('./config/dbConfig');
 const app = express();
-const user_route = require("./routes/user");
+const register_route = require('./routes/register');
+const login_route = require('./routes/login');
+const user_route = require('./routes/user');
 const hotel_route = require('./routes/hotel');
 const room_route = require('./routes/room');
 const facility_route = require('./routes/facility');
@@ -51,7 +53,9 @@ const storage = multer.diskStorage({
 let upload = multer({
    storage: storage,
    // limits: {fileSize: 1000000},
-})
+});
+app.use('/', register_route);
+app.use('/', login_route);
 app.use('/', user_route);
 app.use('/', hotel_route);
 app.use('/', room_route);

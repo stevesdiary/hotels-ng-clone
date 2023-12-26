@@ -1,7 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
 const { Facilities, Hotel, Room } = require('../models');
-const { where } = require('sequelize');
-// const { where } = require('sequelize');
 
 const facilityController = {
   createFacility: async (req, res) => {

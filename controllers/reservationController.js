@@ -8,9 +8,8 @@ const user = require('../models/user');
 const reservationController = {
   createReservation: async (req, res) => {
     try{
-      // const date = moment().format("YYYY-MM-DD hh:mm:ss");
-      
-      const { hotel_id, room_id, user_id, date_in, date_out, payment_status } = req.body;
+      const hotel_id = req.params.hotel_id;
+      const { room_id, user_id, date_in, date_out, payment_status } = req.body;
       console.log(date_in, date_out);
       const id = uuidv4();
       const reservation = await Reservation.create({ id, hotel_id, room_id, user_id, date_in, date_out, payment_status });
@@ -35,7 +34,6 @@ const reservationController = {
           {
             model: User,
             attributes: {
-              // include: [ 'first_name', 'last_name' ],
               exclude: ['id', 'createdAt', 'updatedAt', 'deletedAt']
             }
           },
