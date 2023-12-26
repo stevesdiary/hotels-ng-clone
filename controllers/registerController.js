@@ -1,16 +1,21 @@
 const express = require('express');
-const bcrypt = require('bcryptjs');
-const User = require('../models');
-const { v4: uidv4 } = require('uuid');
-
+const bcrypt = require('bcrypt');
+const { User } = require('../models');
+const { v4: uuidv4 } = require('uuid');
+const saltRounds = bcrypt.genSaltSync(11);
 const registerController = {
   registerUser: async (req, res) => {
     try{
       const { first_name, last_name, phone_number, email, password, type } = req.body;
       const id = uuidv4();
+      console.log(email, "EMAIL", first_name);
+      const userExists = await User.findOne({ where: {email} });
       
-      // console.log(id, first_name, last_name, phone_number, email, type);
-      const user_record = await User.create({ id, first_name, last_name, phone_number, email, type });
+      if(userExists && userExists.length > 0){
+        return res.status(409).json({ message: `User ${first_name} already exists`});
+      }
+      const hashedPassword = await bcrypt.hash(password, saltRounds)
+      const user_record = await User.create({ id, first_name, last_name, phone_number, email, password: hashedPassword, type });
       console.log("User created", user_record);
       return res.status(201).send({ message: `User record for ${first_name} has been created successfully`, user_record })
   

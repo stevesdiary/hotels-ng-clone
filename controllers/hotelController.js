@@ -31,18 +31,9 @@ const hotelController = {
       const id = req.params.id;
       const hotel = await Hotel.findOne({
         where: {id},
-      //   attibutes: {include: ["name",
-      //   "address",
-      //   "city",
-      //   "state",
-      //   "description",
-      //   "hotel_type",
-      //   "number_of_rooms",
-      //   "contact_email",
-      //   "contact_phone",
-      //   "terms_and_condition",],
-      // exclude: 'id'} ,
-        // logging: true,
+      //   attibutes: {
+        // exclude: [
+      //   "terms_and_condition", '],
           include: [
             {
               model: Room,

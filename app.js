@@ -55,7 +55,7 @@ let upload = multer({
    // limits: {fileSize: 1000000},
 });
 app.use('/', register_route);
-app.use('/', login_route);
+// app.use('/', login_route);
 app.use('/', user_route);
 app.use('/', hotel_route);
 app.use('/', room_route);

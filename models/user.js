@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: "First name cannot be null.",
+            msg: "First name cannot be empty.",
           },
         },
       },
@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Last name cannot be null.",
+            msg: "Last name cannot be empty.",
           },
         },
       },
@@ -45,27 +45,39 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
-          notNull: {
-            msg: "Phone number cannot be null.",
+          isPhoneNumber(value) {
+            // Implement your custom phone number validation logic
+            const phoneRegex = /^\d{11}$/; // Example: Allow only 10-digit numbers
+            if (!phoneRegex.test(value)) {
+              throw new Error('Invalid phone number format, include the country code');
+            }
           },
         },
       },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
         validate: {
-          notNull: {
-            msg: "Email cannot be empty.",
-          },
+          isEmail: {
+            msg: 'Invalid email format',
         },
+      },
       },
       password: {
         type: DataTypes.STRING(64),
         allowNull: false,
         validate: {
-          is: /^[0-9a-f]{64}$/i,
-          notNull: {
-            msg: "Password cannot be empty.",
+          notEmpty: {
+            args: true,
+            msg: 'Password cannot be empty',
+          },
+          isStrongPassword: (value) => {
+            // Custom validation function for a strong password
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!passwordRegex.test(value)) {
+              throw new Error('Password must be at least 8 characters long and include at least one lowercase letter, one uppercase letter, one numeric digit, and one special character.');
+            }
           },
         },
       },
