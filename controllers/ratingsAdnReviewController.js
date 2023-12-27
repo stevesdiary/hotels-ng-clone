@@ -39,7 +39,12 @@ const ratingsAdnReviewController = {
   getRating: async (req, res) => {
     try{
       const id = req.params.id;
-      const ratings = await RatingAndReview.findOne({ where: { id }});
+      const ratings = await RatingAndReview.findOne({ 
+        where: { id },
+        attributes: {
+          exclude: [ 'createdAt', 'updatedAt', 'deletedAt']
+        },
+      });
       if (ratings){
         const { service, security, comfort, location } = ratings;
         const averageRating = (service + security + comfort + location) /4;
