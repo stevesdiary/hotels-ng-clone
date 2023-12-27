@@ -100,7 +100,12 @@ const facilityController = {
   getFacility: async (req, res) => {
     try{
       const hotel_id = req.params.hotel_id;
-      const facility = await Facilities.findOne({where: {hotel_id}});
+      const facility = await Facilities.findOne({
+        where: {hotel_id},
+        attributes: {
+          exclude: [ 'createdAt', 'updatedAt', 'deletedAt']
+        },
+      });
       if (facility.length == 0 ) {
         console.log(facility.length, 'facility length')
         return res.status(404).send({message: 'Facility record not found'})
@@ -114,7 +119,11 @@ const facilityController = {
 
   getAllFacilities: async (req, res) => {
     try{
-      const facilities = await Facilities.findAll();
+      const facilities = await Facilities.findAll({
+        attributes: {
+          exclude: [ 'createdAt', 'updatedAt', 'deletedAt']
+        },
+      });
       return res.status(200).send({message: 'Records found', Records: facilities});
     }
     catch(err){

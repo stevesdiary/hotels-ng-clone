@@ -9,7 +9,7 @@ const hotelController = {
       const id = uuidv4();
       const { name, address, city, state, description, hotel_type, number_of_rooms, contact_email, contact_phone, terms_and_condition } = req.body;
       const createHotel = await Hotel.create({id, name, address, city, state, description, hotel_type, number_of_rooms, contact_email, contact_phone, terms_and_condition});
-      console.log('Record created', createHotel);
+      // console.log('Record created', createHotel);
       return res.status(201).send({message: 'Record created.', data: createHotel})
     }
     catch(err){
@@ -19,7 +19,11 @@ const hotelController = {
 
   findAllHotel: async (req, res) => {
     try{
-      const hotels = await Hotel.findAll();
+      const hotels = await Hotel.findAll({
+        attributes: {
+          exclude: [ 'createdAt', 'updatedAt', 'deletedAt']
+        },
+      });
       return res.status(200).send({message: `Hotel record found.`, data: hotels})
     } catch(err){
       return res.status(500).send({message: 'An error occoured', err});
@@ -46,12 +50,16 @@ const hotelController = {
             {
               model: Facilities,
               as: 'facilities',
-              required: false
+              attributes: {
+                exclude: [ 'createdAt', 'updatedAt', 'deletedAt']
+              },
             },
             {
               model: RatingAndReview,
               as: 'ratingAndReview',
-              required: false
+              attributes: {
+                exclude: [ 'createdAt', 'updatedAt', 'deletedAt']
+              },
             },
             // {
             //   module: Reservation,
