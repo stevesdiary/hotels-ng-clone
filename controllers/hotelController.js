@@ -31,17 +31,17 @@ const hotelController = {
       const id = req.params.id;
       const hotel = await Hotel.findOne({
         where: {id},
-      //   attibutes: {
-        // exclude: [
-      //   "terms_and_condition", '],
+        attributes: {
+        exclude: [
+        'terms_and_condition', 'createdAt', 'updatedAt', 'deletedAt' ],
           include: [
             {
               model: Room,
               as: 'rooms',
-              // attibutes: {
-              //   include: [ 'category', 'capacity', 'check_out', 'description', 'availability', 'price', 'condition'],
-              //   exclude: [ 'id', 'hotel_id', 'createdAt', 'updatedAt', 'deletedAt']
-              // }
+              attributes: {
+                // include: [ 'category', 'capacity', 'check_out', 'description', 'availability', 'price', 'condition'],
+                exclude: [ 'id', 'hotel_id', 'createdAt', 'updatedAt', 'deletedAt']
+              }
             },
             {
               model: Facilities,
@@ -59,7 +59,7 @@ const hotelController = {
             //   required: false
             // }
           ],
-          
+        }  
       });
       // console.log('record found')
       return res.status(200).send({message: `Hotel record found.`, data: hotel})
