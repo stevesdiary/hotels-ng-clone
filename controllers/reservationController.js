@@ -1,7 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 
 const { Reservation, User, Room, Hotel, Facilities } = require('../models');
-const { Model } = require('sequelize');
+const { Model, where } = require('sequelize');
 const moment = require('moment');
 const user = require('../models/user');
 
@@ -125,6 +125,26 @@ const reservationController = {
     }
     catch(err){
       return res.status(500).send({message: `There was an error.`, err});
+    }
+  },
+  updateReservation: async (req, res) => {
+    try{
+      const id = req.params.id;
+      const updateReservation = await Reservation.update({status: 'used'},{where: {id}});
+      if (updateReservation){
+        return res.status(200).send({Message: 'Reservation has been updated to "used".'});
+      }
+    }
+    catch(err){
+      return res.status(500).send({Message: 'Reservation unable to update.', Error: err});
+    }
+  },
+  deleteReservation: async (req, res) => {
+    try{
+      con
+    }
+    catch(err){
+      return res.status(500).send({Message: 'Reservation unable to update.', Error: err});
     }
   }
 }
