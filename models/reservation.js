@@ -52,7 +52,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false,
     },
-
+    status: {
+      type: DataTypes.ENUM("active", "used"),
+      allowNull: false,
+      defaultValue: "active"
+    },
     payment_status: DataTypes.BOOLEAN
   }, {
     sequelize,
