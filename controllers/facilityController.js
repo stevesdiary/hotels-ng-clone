@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const { Facilities, Hotel, Room } = require('../models');
-
+const verifyType = require('../middleware/verifyType');
 const facilityController = {
   createFacility: async (req, res) => {
     try{
@@ -39,8 +39,7 @@ const facilityController = {
         electricity_24h,
         car_park,
       });
-      // console.log('Facilities created', facility);
-        // return res.status(201).send({message: 'Facility created successfully', Facility: facility});
+
       if (facility == 1) {
         console.log('Facilities created', facility);
         return res.status(201).send({message: 'Facility created successfully', Facility: facility});
@@ -69,7 +68,6 @@ const facilityController = {
         electricity_24h,
         car_park 
       } = req.body;
-      console.log(req.body);
       const facility = await Facilities.update({
         restaurant,
         bar_launge,
@@ -85,10 +83,8 @@ const facilityController = {
         electricity_24h,
         car_park,
       }, {where: {id}});
-      // console.log('Facilities created', facility);
-        // return res.status(201).send({message: 'Facility created successfully', Facility: facility});
       if (facility == 1) {
-        console.log('Facilities updated', facility);
+        console.log('Facilities updated successfully.', facility);
         return res.status(200).send({message: 'Facility updated successfully', Facility: facility});
       }
     }
