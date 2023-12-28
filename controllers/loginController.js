@@ -10,14 +10,12 @@ const loginController = {
   login: async (req, res) => {
     try{
       const {email, password } = req.body;
-      console.log(email, password);
       const userData = await User.findOne({ where: { email: email } });
       if (!userData) {
-        console.log('User not found: ', userData);
-        return res.status(404).send({ Message: "Email not found!" });
+        return res.status(404).send({ Message: "Email is not correct or not found!" });
       }
       const passwordMatch = await bcrypt.compare(password, userData.password);
-      console.log(userData.password, passwordMatch, password);
+      // console.log(userData.password, passwordMatch, password);
       if (!passwordMatch) {
         return res.status(401).send({ Message: "Password is not correct, please provide the correct password." });
       } 
@@ -35,6 +33,7 @@ const loginController = {
           },
         },
         process.env.JWT_SECRET,
+        {exiresIn: process.env.LOGIN_EXPIRE},
         // {exp: Math.floor(Date.now() / 1000) + 60 * 60 * 10},
       );
       console.log(`${email} logged in as ${type} user.`);
