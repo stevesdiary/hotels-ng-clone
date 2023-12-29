@@ -60,10 +60,11 @@ const reservationController = {
           
         ]
       });
+      console.log(reservation.dataValues.User.dataValues.first_name)
       if (reservation) {
         return res.status(500).send({message: `Reservation record found`, Reservation: reservation});
       }
-      if(reservation == 0){
+      if(!reservation){
         return res.send({message: `Reservation with id ${id} does not exist or is deleted in the database`});
       }
     }
@@ -127,26 +128,65 @@ const reservationController = {
       return res.status(500).send({message: `There was an error.`, err});
     }
   },
-  updateReservation: async (req, res) => {
+  
+  removeReservations: async (req, res) => {
     try{
-      const id = req.params.id;
-      const updateReservation = await Reservation.update({status: 'used'},{where: {id}});
-      if (updateReservation){
-        return res.status(200).send({Message: 'Reservation has been updated to "used".'});
+      const deleteReservation = await Reservation.destroy({where: {status: 'used'}});
+      if (deleteReservation){
+        console.log(`Used reservations have been deleted successfully.`);
+        return res.status(200).send({Message: `Used reservations have been deleted successfully.`})
       }
     }
     catch(err){
       return res.status(500).send({Message: 'Reservation unable to update.', Error: err});
     }
   },
+  updateReservation: async (req, res) => {
+    try{
+      const id = req.params.id;
+      const reservation = await Reservation.findOne({
+        where: { id },
+        attributes: {
+          exclude: ['hotel_id', 'user_id', 'room_id', 'createdAt', 'updatedAt', 'deletedAt']
+        },
+        include: [
+          {
+            model: User,
+            attributes: {
+              exclude: ['id', 'createdAt', 'updatedAt', 'deletedAt']
+            }
+          }
+        ],
+      })
+      let first_name = reservation.dataValues.User.dataValues.first_name;
+      let last_name = reservation.dataValues.User.dataValues.last_name;
+      const updateReservation = await Reservation.update({status: 'used'},{where: {id}});
+      if (updateReservation){
+        return res.status(200).send({Message: `Reservation for ${first_name} ${last_name} has been updated to 'used'.`});
+      }
+    }
+    catch(err){
+      return res.status(500).send({Message: 'Failed to update reservation, please try again later.', Error: err});
+    }
+  },
   deleteReservation: async (req, res) => {
     try{
-      con
+      const id = req.params.id;
+      const deleteReservation = await Reservation.destroy({
+        where: {id}});
+      if (deleteReservation){
+        return res.status(200).send({Message: `Reservation with id ${id} has been deleted successfully`})
+      }
+      else{
+        return res.status(404).send({Message: `reservation with id: ${id} has been deleted or is not found.`})
+      }
     }
     catch(err){
       return res.status(500).send({Message: 'Reservation unable to update.', Error: err});
     }
-  }
+  },
+
+
 }
 
 module.exports = reservationController;

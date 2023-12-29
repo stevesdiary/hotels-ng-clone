@@ -10,8 +10,9 @@ router.get('/getone/:id', reservationController.getOne);
 
 router.get('/getall', reservationController.getAll);
 
-// router.put('/update/:id', reservationController.updateReservation);
+router.put('/updatereservation/:id', reservationController.updateReservation);
 
-// router.delete('/delete/:id', reservationController.delete)
+router.delete('/removereservations', reservationController.removeReservations);
 
+router.delete('/deletereservation/:id', reservationController.deleteReservation);
 module.exports = router;
