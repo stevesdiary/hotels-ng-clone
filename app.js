@@ -11,6 +11,7 @@ const cors = require ("cors");
 const helmet = require('helmet');
 const db = require('./config/dbConfig');
 const app = express();
+const cron = require('node-cron');
 const register_route = require('./routes/register');
 const login_route = require('./routes/login');
 const user_route = require('./routes/user');
@@ -66,6 +67,18 @@ app.use('/', reservation_route);
 app.get('/', (req, res) => {
    res.send("Description.")
 })
+
+// app.post('/cron', async (req, res) =>{
+//    try{
+//       cron.schedule('*/2 * * * *', () => {
+//          console.log('running a task every two minutes');
+//       });
+//       return res.send({message: 'crone job running'});
+//    }
+//    catch(err){
+//       res.send({message: `An error ocoured`, Error: err})
+//    }
+// });
 app.post('/upload', upload.single('image', { folder: "hotels-ng" },), async(req, res) => {
    try {
       let imagePath = "./uploads/" + req.file.filename;

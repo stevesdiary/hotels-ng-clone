@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
-
+const cron = require('node-cron');
 const { Reservation, User, Room, Hotel, Facilities } = require('../models');
 const { Model, where } = require('sequelize');
 const moment = require('moment');
@@ -131,14 +131,33 @@ const reservationController = {
   
   removeReservations: async (req, res) => {
     try{
-      const deleteReservation = await Reservation.destroy({where: {status: 'used'}});
-      if (deleteReservation){
-        console.log(`Used reservations have been deleted successfully.`);
-        return res.status(200).send({Message: `Used reservations have been deleted successfully.`})
-      }
+      // cron.schedule('*/2 * * * *', async () => {
+      //   console.log('Running every 2 minutes');
+      //   const deleteReservation = await Reservation.destroy({where: {status: 'used'}});
+      // if (deleteReservation){
+      //   console.log(`Used reservations have been deleted successfully.`);
+      //   return res.status(200).send({Message: `Used reservations have been deleted successfully.`});
+      // }
+      // else {
+      //   console.log('All used reservations have been deleted or no used reservations')
+      //   return res.status(404).send({message: 'All used reservations have been deleted or no used reservations'});
+      // }
+      // });
+      // Delete used reervations periodiucally
+      cron.schedule('0 */6 * * *', async () => {
+        console.log('Delete used reservations every 6 hours');
+        const deleteReservation = await Reservation.destroy({where: {status: 'used'}});
+        if (deleteReservation){
+          console.log(`Used reservations have been deleted successfully.`);
+          return res.status(200).send({Message: `Used reservations have been deleted successfully.`});
+        }
+        else{
+          return res.status(200).send({message: 'All used reservations have been deleted or no used reservations'});
+        }
+      })
     }
     catch(err){
-      return res.status(500).send({Message: 'Reservation unable to update.', Error: err});
+      return res.status(500).send({Message: 'Multiple reservations unable to delete.', Error: err});
     }
   },
   updateReservation: async (req, res) => {
