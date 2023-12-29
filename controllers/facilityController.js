@@ -131,7 +131,6 @@ const facilityController = {
     try{
       const id = req.params.id;
       const facility = await Facilities.destroy({where: {id}});
-      // return res.status(200).send({message: 'Records deleted', Records: facilities});
       if (facility == 1) {
         return res.status(500).send({message: `Facility record with id ${id} has been deleted successfully`});
       }

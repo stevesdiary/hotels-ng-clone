@@ -1,9 +1,6 @@
 const express = require('express');
-
 const router = express.Router();
-
 const ratingsAndReviewsController = require('../controllers/ratingsAdnReviewController');
-// const { router } = require('../app');
 
 router.post('/createrating/:user_id', ratingsAndReviewsController.createRating);
 
