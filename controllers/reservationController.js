@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const cron = require('node-cron');
-const { Reservation, User, Room, Hotel, Facilities } = require('../models');
+const { Reservation, User, Room, Hotel, Facility } = require('../models');
 const { Model, where } = require('sequelize');
 const moment = require('moment');
 const user = require('../models/user');
@@ -42,14 +42,15 @@ const reservationController = {
             attributes: {
               exclude: [ 'id', 'description', 'terms_and_condition', 'createdAt', 'updatedAt', 'deletedAt' ]
             },
-            // include: [
-            //   {
-            //     model: Facilities,
-            //     attributes: {
-            //       exclude: ['id', 'hotel_id', 'createdAt', 'updatedAt', 'deletedAt']
-            //     }
-            //   }
-            // ]
+            include: [
+              {
+                model: Facility,
+                as: 'facilities',
+                attributes: {
+                  exclude: ['id', 'hotel_id', 'createdAt', 'updatedAt', 'deletedAt']
+                }
+              }
+            ]
           },
           {
             model: Room,
@@ -88,23 +89,24 @@ const reservationController = {
           {
             model: User,
             attributes: {
-              // include: [ 'first_name', 'last_name' ],
               exclude: ['id', 'createdAt', 'updatedAt', 'deletedAt']
             }
           },
           {
             model: Hotel,
+            // as: 'hotel',
             attributes: {
               exclude: [ 'id', 'description', 'terms_and_condition', 'createdAt', 'updatedAt', 'deletedAt' ]
             },
-            // include: [
-            //   {
-            //     model: Facilities,
-            //     attributes: {
-            //       exclude: ['id', 'hotel_id', 'createdAt', 'updatedAt', 'deletedAt']
-            //     }
-            //   }
-            // ]
+            include: [
+              {
+                model: Facility,
+                as: 'facilities',
+                attributes: {
+                  exclude: ['id', 'hotel_id', 'createdAt', 'updatedAt', 'deletedAt']
+                }
+              }
+            ]
           },
           {
             model: Room,
@@ -115,7 +117,6 @@ const reservationController = {
           
         ]
       });
-      // return res.status(500).send({message: `Reservation record found`, Reservation: reservation});
     
       if (reservations) {
         return res.status(500).send({message: `Reservation records found`, Reservation: reservations});
@@ -125,6 +126,7 @@ const reservationController = {
       }
     }
     catch(err){
+      console.error(err);
       return res.status(500).send({message: `There was an error.`, err});
     }
   },
@@ -133,28 +135,28 @@ const reservationController = {
     try{
       // cron.schedule('*/2 * * * *', async () => {
       //   console.log('Running every 2 minutes');
-      //   const deleteReservation = await Reservation.destroy({where: {status: 'used'}});
-      // if (deleteReservation){
-      //   console.log(`Used reservations have been deleted successfully.`);
-      //   return res.status(200).send({Message: `Used reservations have been deleted successfully.`});
-      // }
-      // else {
-      //   console.log('All used reservations have been deleted or no used reservations')
-      //   return res.status(404).send({message: 'All used reservations have been deleted or no used reservations'});
-      // }
-      // });
-      // Delete used reervations periodiucally
-      cron.schedule('0 */6 * * *', async () => {
-        console.log('Delete used reservations every 6 hours');
         const deleteReservation = await Reservation.destroy({where: {status: 'used'}});
-        if (deleteReservation){
-          console.log(`Used reservations have been deleted successfully.`);
-          return res.status(200).send({Message: `Used reservations have been deleted successfully.`});
-        }
-        else{
-          return res.status(200).send({message: 'All used reservations have been deleted or no used reservations'});
-        }
-      })
+      if (deleteReservation){
+        console.log(`Used reservations have been deleted successfully.`);
+        return res.status(200).send({Message: `Used reservations have been deleted successfully.`});
+      }
+      else {
+        console.log('All used reservations have been deleted or no used reservations')
+        return res.status(404).send({message: 'All used reservations have been deleted or no used reservations'});
+      }
+      // });
+      // // Delete used reervations periodiucally
+      // cron.schedule('0 */6 * * *', async () => {
+      //   console.log('Delete used reservations every 6 hours');
+      //   const deleteReservation = await Reservation.destroy({where: {status: 'used'}});
+      //   if (deleteReservation){
+      //     console.log(`Used reservations have been deleted successfully.`);
+      //     return res.status(200).send({Message: `Used reservations have been deleted successfully.`});
+      //   }
+      //   else{
+      //     return res.status(200).send({message: 'All used reservations have been deleted or no used reservations'});
+      //   }
+      // });
     }
     catch(err){
       return res.status(500).send({Message: 'Multiple reservations unable to delete.', Error: err});

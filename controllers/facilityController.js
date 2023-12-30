@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
-const { Facilities, Hotel, Room } = require('../models');
+const { Facility, Hotel, Room } = require('../models');
 const verifyType = require('../middleware/verifyType');
 const facilityController = {
   createFacility: async (req, res) => {
@@ -22,7 +22,7 @@ const facilityController = {
         car_park 
       } = req.body;
       console.log(req.body);
-      const facility = await Facilities.create({
+      const facility = await Facility.create({
         id,
         hotel_id,
         restaurant,
@@ -68,7 +68,7 @@ const facilityController = {
         electricity_24h,
         car_park 
       } = req.body;
-      const facility = await Facilities.update({
+      const facility = await Facility.update({
         restaurant,
         bar_launge,
         security,
@@ -96,7 +96,7 @@ const facilityController = {
   getFacility: async (req, res) => {
     try{
       const hotel_id = req.params.hotel_id;
-      const facility = await Facilities.findOne({
+      const facility = await Facility.findOne({
         where: {hotel_id},
         attributes: {
           exclude: [ 'createdAt', 'updatedAt', 'deletedAt']
@@ -115,7 +115,7 @@ const facilityController = {
 
   getAllFacilities: async (req, res) => {
     try{
-      const facilities = await Facilities.findAll({
+      const facilities = await Facility.findAll({
         attributes: {
           exclude: [ 'createdAt', 'updatedAt', 'deletedAt']
         },
@@ -130,7 +130,7 @@ const facilityController = {
   deleteFacility: async (req, res) => {
     try{
       const id = req.params.id;
-      const facility = await Facilities.destroy({where: {id}});
+      const facility = await Facility.destroy({where: {id}});
       if (facility == 1) {
         return res.status(500).send({message: `Facility record with id ${id} has been deleted successfully`});
       }

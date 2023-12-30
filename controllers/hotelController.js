@@ -1,7 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
-const { Hotel, Room, Facilities, RatingAndReview, Reservation } = require('../models');
-const ratingAndReview = require('../models/ratingAndReview');
-// const room = require('../models/room');
+const { Hotel, Room, Facility, RatingAndReview, Reservation } = require('../models');
 
 const hotelController = {
   createHotel: async (req, res) => {
@@ -19,63 +17,69 @@ const hotelController = {
 
   findAllHotel: async (req, res) => {
     try{
+      // SHowing likes, review, (avg)price/night, facilities
       const hotels = await Hotel.findAll({
         attributes: {
           exclude: [ 'createdAt', 'updatedAt', 'deletedAt']
         },
       });
-      return res.status(200).send({message: `Hotel record found.`, data: hotels})
+      return res.status(200).send({Message: `Hotel records found.`, Hotel: hotels})
     } catch(err){
-      return res.status(500).send({message: 'An error occoured', err});
+      return res.status(500).send({Message: 'An error occoured', err});
     }
   },
 
   findOneHotel: async (req, res) => {
-    try{
+    try {
       const id = req.params.id;
       const hotel = await Hotel.findOne({
-        where: {id},
+        where: { id },
         attributes: {
-        exclude: [
-        'terms_and_condition', 'createdAt', 'updatedAt', 'deletedAt' ],
-          include: [
-            {
-              model: Room,
-              as: 'rooms',
-              attributes: {
-                // include: [ 'category', 'capacity', 'check_out', 'description', 'availability', 'price', 'condition'],
-                exclude: [ 'id', 'hotel_id', 'createdAt', 'updatedAt', 'deletedAt']
-              }
+          exclude: [ 'createdAt', 'updatedAt', 'deletedAt'],
+        },
+        include: [
+          {
+            model: Room,
+            as: 'rooms',
+            attributes: {
+              exclude: ['id', 'hotel_id', 'createdAt', 'updatedAt', 'deletedAt'],
             },
-            {
-              model: Facilities,
-              as: 'facilities',
-              attributes: {
-                exclude: [ 'createdAt', 'updatedAt', 'deletedAt']
-              },
+          },
+          {
+            model: Facility,
+            as: 'facilities',
+            attributes: {
+              exclude: ['createdAt', 'updatedAt', 'deletedAt'],
             },
-            {
-              model: RatingAndReview,
-              as: 'ratingAndReview',
-              attributes: {
-                exclude: [ 'createdAt', 'updatedAt', 'deletedAt']
-              },
+          },
+          {
+            model: RatingAndReview,
+            as: 'ratingAndReview',
+            attributes: {
+              exclude: ['createdAt', 'updatedAt', 'deletedAt'],
             },
-            // {
-            //   module: Reservation,
-            //   as: 'reservation',
-            //   required: false
-            // }
-          ],
-        }  
+          },
+          {
+            model: Reservation,
+            as: 'reservation',
+            attributes: {
+              exclude: ['createdAt', 'updatedAt', 'deletedAt'],
+            },
+          },
+        ],
       });
-      // console.log('record found')
-      return res.status(200).send({message: `Hotel record found.`, data: hotel})
-    } catch(err){
-      return res.status(500).send({message: 'An error occoured', err});
+  
+      if (hotel) {
+        return res.status(200).send({ Message: 'Hotel record found.', Hotel: hotel });
+      } else {
+        return res.status(404).send({ Message: 'Hotel not found.' });
+      }
+    } catch (err) {
+      console.error(err);
+      return res.status(500).send({ message: 'An error occurred', err });
     }
   },
-
+  
   updateHotel: async (req, res) => {
     try{
       const id = req.params.id;
@@ -83,8 +87,9 @@ const hotelController = {
       const updateUser = await Hotel.update({ name, address, city, state, description, hotel_type, number_of_rooms, contact_email, contact_phone, terms_and_condition}, {where: {id}});
       console.log('Record updated', createHotel);
       if(updateUser == 1){
-        return res.status(201).send({message: 'Record created.', data: createHotel});
-      } 
+        return res.status(201).send({message: 'Record created.', Hotel: createHotel});
+      }
+      else{}
     }
     catch(err){
       return res.status(500).send({message: 'An error occoured', err});
