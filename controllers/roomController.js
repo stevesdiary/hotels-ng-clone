@@ -6,13 +6,13 @@ const roomController = {
     try{
       const email = req.body.email;
       const id = uuidv4();
-      const { hotel_id, category, capacity, description, availability, price, condition } = req.body;
+      const { hotel_id, category, capacity, deals, description, availability, price, discount, condition } = req.body;
       // const hotel = await Hotel.findOne({where: {email}});
       const check_in = req.body.check_in;
       const check_out = req.body.check_out;
       console.log(check_in, check_out)
       console.log(hotel_id, email, "Here is the hotel ID", req.body)
-      const room = await Room.create({id, hotel_id, category, capacity, check_in, check_out, description, availability, price, condition});
+      const room = await Room.create({id, hotel_id, category, capacity, deals, check_in, check_out, description, availability, price, discount, condition});
       console.log('Data created', room)
       return res.status(201).send({message: 'Room created successfully', room})
     }
@@ -46,8 +46,8 @@ const roomController = {
   updateRoom: async (req, res) => {
     try{
       const id = req.params.id;
-      const {category, capacity, description, availability, price, condition } = req.body;
-      const updateRoom = await Room.update({category, capacity, description, availability, price, condition }, {where: {id}});
+      const {category, capacity, deals, description, availability, price, discount, condition } = req.body;
+      const updateRoom = await Room.update({category, capacity, deals, description, availability, price, discount, condition }, {where: {id}});
       return res.status(200).send({message: `Record with id ${id} has been updated successfully`, updateRoom});
     }
     catch(err){

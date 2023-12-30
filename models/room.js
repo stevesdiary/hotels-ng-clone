@@ -35,6 +35,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      deals: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
       check_in: {
         type: DataTypes.TIME,
         allowNull: false,
@@ -55,6 +59,10 @@ module.exports = (sequelize, DataTypes) => {
       price: {
         type: DataTypes.INTEGER,
         allowNull: false,
+      },
+      discount: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
       },
       condition: {
         type: DataTypes.UUIDV4,
