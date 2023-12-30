@@ -4,20 +4,22 @@ const {Room, Hotel} = require('../models');
 const roomController = {
   createRoom: async (req, res) => {
     try{
-      const email = req.body.email;
+      const contact_email = req.body.contact_email;
       const id = uuidv4();
-      const { hotel_id, category, capacity, deals, description, availability, price, discount, condition } = req.body;
-      // const hotel = await Hotel.findOne({where: {email}});
+      const { category, capacity, deals, description, availability, price,  condition } = req.body;
+      const discountOff = Math.round(price * (deals / 100));
+      const discount = price - discountOff;
+      const hotel = await Hotel.findOne({where: {contact_email}});
+      const hotel_id = hotel.id;
+      // console.log(hotel_id, deals, price,  discount )
       const check_in = req.body.check_in;
       const check_out = req.body.check_out;
-      console.log(check_in, check_out)
-      console.log(hotel_id, email, "Here is the hotel ID", req.body)
       const room = await Room.create({id, hotel_id, category, capacity, deals, check_in, check_out, description, availability, price, discount, condition});
       console.log('Data created', room)
       return res.status(201).send({message: 'Room created successfully', room})
     }
     catch(err){
-      console.log('Room not created', err)
+      console.error('Room not created', err)
       return res.status(500).send({message: 'An error occoured', err})
     }
   },
@@ -46,8 +48,10 @@ const roomController = {
   updateRoom: async (req, res) => {
     try{
       const id = req.params.id;
-      const {category, capacity, deals, description, availability, price, discount, condition } = req.body;
-      const updateRoom = await Room.update({category, capacity, deals, description, availability, price, discount, condition }, {where: {id}});
+      const {category, capacity, deals, description, availability, price, condition } = req.body;
+      const discountOff = Math.round(price * (deals / 100));
+      const discount = price - discountOff;
+      const updateRoom = await Room.update({category, capacity, description, availability, deals, price, discount, condition }, {where: {id}});
       return res.status(200).send({message: `Record with id ${id} has been updated successfully`, updateRoom});
     }
     catch(err){
