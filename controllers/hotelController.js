@@ -7,6 +7,7 @@ const {
   Reservation,
   Sequelize,
 } = require("../models");
+const { logging } = require("googleapis/build/src/apis/logging");
 const Op = Sequelize.Op;
 
 const hotelController = {
@@ -54,11 +55,11 @@ const hotelController = {
         // return str.charAt(0).toUpperCase() + str.slice(1);
         // return str.replace(/\b\w/g, (char) => char.toUpperCase());
       // }
-      const search = (req.query.search);
-      const minPrice = req.query.minPrice;
+      const search = req.query.search;
+      const minPrice = req.query.minPrice || 0;
       const maxPrice = req.query.maxPrice;
       let nameCitySearch = [];
-      if (search || !search) {
+      if (search) {
         nameCitySearch.push({
           [Op.or]: [
             { name: { [Op.like]: `%${search}%` } },
@@ -67,18 +68,33 @@ const hotelController = {
           ],
         });
       }
+      console.log("minPrice:", minPrice);
+      console.log("maxPrice:", maxPrice);
+
+      const whereConditions = {
+        [Op.and]:[
+          ...nameCitySearch,
+        // Conditionally include price range
+        // Sequelize.literal(`price BETWEEN '${minPrice}' AND '${maxPrice}'`),
+        
+        ]
+      };
+      if (minPrice !== undefined && maxPrice !== undefined) {
+        whereConditions['$rooms.price$'] = {
+          [Op.between]: [minPrice, maxPrice],
+        };
+      }
       const { count, rows: hotels } = await Hotel.findAndCountAll({
+        // logging: console.log,
         distinct: true,
         attributes: {
           exclude: ["createdAt", "updatedAt", "deletedAt"],
         },
+        where: whereConditions,
         include: [
           {
             model: Room,
             as: "rooms",
-            where: {
-              price: {[Op.between]: [minPrice, maxPrice]}
-            },
             attributes: {
               exclude: [
                 "id",
@@ -114,7 +130,9 @@ const hotelController = {
         // group: ['Hotel.id', 'rooms.id'],
       });
 
-
+      if(count == 0){
+        return res.status(404).send({Message: 'No record found for this query, try using city name or hotel name and correct price range'})
+      }
       return res
         .status(200)
         .send({ Message: `Hotel records found.`, Count: count, Hotel: hotels });
