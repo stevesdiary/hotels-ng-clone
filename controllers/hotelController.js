@@ -52,11 +52,41 @@ const hotelController = {
     try {
       // SHowing likes, review, (avg)price/night, facilities
       // const capitalizeEveryFirstWord = (str) => {
-        // return str.charAt(0).toUpperCase() + str.slice(1);
-        // return str.replace(/\b\w/g, (char) => char.toUpperCase());
+      // return str.charAt(0).toUpperCase() + str.slice(1);
+      // return str.replace(/\b\w/g, (char) => char.toUpperCase());
       // }
       const hotel_type = req.query.hotel_type;
       const search = req.query.search;
+      const {
+        restaurant,
+        bar_launge,
+        gym,
+        room_service,
+        wifi_internet,
+        dstv,
+        security,
+        swimming_pool,
+        cctv,
+        front_desk_24h,
+        car_hire,
+        electricity_24h
+      } = req.query;
+      
+      const facilities = {
+        restaurant,
+        bar_launge,
+        gym,
+        room_service,
+        wifi_internet,
+        dstv,
+        security,
+        swimming_pool,
+        cctv,
+        front_desk_24h,
+        car_hire,
+        electricity_24h
+      };
+      
       const minPrice = req.query.minPrice || 0;
       const maxPrice = req.query.maxPrice;
       let nameCitySearch = [];
@@ -73,22 +103,54 @@ const hotelController = {
       console.log("maxPrice:", maxPrice);
 
       const whereConditions = {
-        [Op.and]:[
-          ...nameCitySearch,
-        // Conditionally include price range
-        // Sequelize.literal(`price BETWEEN '${minPrice}' AND '${maxPrice}'`),
-        
-        ]
+        [Op.and]: [...nameCitySearch],
       };
       if (minPrice !== undefined && maxPrice !== undefined) {
-        whereConditions['$rooms.price$'] = {
+        whereConditions["$rooms.price$"] = {
           [Op.between]: [minPrice, maxPrice],
         };
       }
-      if (hotel_type !== undefined){
-        whereConditions['$hotel.hotel_type$'] = {
+      if (hotel_type !== undefined) {
+        whereConditions["$hotel.hotel_type$"] = {
           [Op.like]: [hotel_type],
-        }
+        };
+      }
+      if (facilities !== undefined) {
+        const facilityConditions = [
+          "restaurant",
+          "bar_launge",
+          "gym",
+          "room_service",
+          "wifi_internet",
+          "dstv",
+          "security",
+          "swimming_pool",
+          "cctv",
+          "front_desk_24h",
+          "car_hire",
+          "electricity_24h",
+        ];
+      
+        const facilityValues = [
+          restaurant,
+          bar_launge,
+          gym,
+          room_service,
+          wifi_internet,
+          dstv,
+          security,
+          swimming_pool,
+          cctv,
+          front_desk_24h,
+          car_hire,
+          electricity_24h,
+        ];
+      
+        facilityConditions.forEach((condition, index) => {
+          whereConditions[`$facilities.${condition}$`] = {
+            [Op.eq]: facilityValues[index],
+          };
+        });
       }
       const { count, rows: hotels } = await Hotel.findAndCountAll({
         // logging: console.log,
@@ -135,8 +197,12 @@ const hotelController = {
         ],
       });
 
-      if(count == 0){
-        return res.status(404).send({Message: 'No record found for this query, try using city name or hotel name and correct price range'})
+      if (count == 0) {
+        return res.status(404).send({
+          Message:
+            "No record found for this search, try checking the search parameters n\
+            You can search by Hotel name, price range, city, hotel facilities and date range.",
+        });
       }
       return res
         .status(200)
