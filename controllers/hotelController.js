@@ -55,6 +55,7 @@ const hotelController = {
         // return str.charAt(0).toUpperCase() + str.slice(1);
         // return str.replace(/\b\w/g, (char) => char.toUpperCase());
       // }
+      const hotel_type = req.query.hotel_type;
       const search = req.query.search;
       const minPrice = req.query.minPrice || 0;
       const maxPrice = req.query.maxPrice;
@@ -83,6 +84,11 @@ const hotelController = {
         whereConditions['$rooms.price$'] = {
           [Op.between]: [minPrice, maxPrice],
         };
+      }
+      if (hotel_type !== undefined){
+        whereConditions['$hotel.hotel_type$'] = {
+          [Op.like]: [hotel_type],
+        }
       }
       const { count, rows: hotels } = await Hotel.findAndCountAll({
         // logging: console.log,
@@ -127,7 +133,6 @@ const hotelController = {
             },
           },
         ],
-        // group: ['Hotel.id', 'rooms.id'],
       });
 
       if(count == 0){
