@@ -50,7 +50,6 @@ const hotelController = {
 
   findAllHotel: async (req, res) => {
     try {
-      // SHowing likes, review, (avg)price/night, facilities
       // const capitalizeEveryFirstWord = (str) => {
       // return str.charAt(0).toUpperCase() + str.slice(1);
       // return str.replace(/\b\w/g, (char) => char.toUpperCase());
@@ -86,7 +85,8 @@ const hotelController = {
         car_hire,
         electricity_24h
       };
-      
+      const dateIn = req.query.dateIn;
+      const dateOut = req.query.dateOut
       const minPrice = req.query.minPrice || 0;
       const maxPrice = req.query.maxPrice;
       let nameCitySearch = [];
@@ -99,9 +99,6 @@ const hotelController = {
           ],
         });
       }
-      console.log("minPrice:", minPrice);
-      console.log("maxPrice:", maxPrice);
-
       const whereConditions = {
         [Op.and]: [...nameCitySearch],
       };
@@ -305,12 +302,13 @@ const hotelController = {
       console.log("Record updated", createHotel);
       if (updateUser == 1) {
         return res
-          .status(201)
-          .send({ message: "Record created.", Hotel: createHotel });
+          .status(200)
+          .send({ Message: "Record updated.", Hotel: createHotel });
       } else {
+        console.error(`Record not updated, there's an error`)
       }
     } catch (err) {
-      return res.status(500).send({ message: "An error occoured", err });
+      return res.status(500).send({ Message: "An error occoured", err });
     }
   },
 
