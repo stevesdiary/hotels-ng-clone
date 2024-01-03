@@ -85,8 +85,8 @@ const hotelController = {
         car_hire,
         electricity_24h
       };
-      const dateIn = req.query.dateIn;
-      const dateOut = req.query.dateOut
+      const date_in = req.query.date_in;
+      const date_out = req.query.date_out;
       const minPrice = req.query.minPrice || 0;
       const maxPrice = req.query.maxPrice;
       let nameCitySearch = [];
@@ -105,6 +105,21 @@ const hotelController = {
       if (minPrice !== undefined && maxPrice !== undefined) {
         whereConditions["$rooms.price$"] = {
           [Op.between]: [minPrice, maxPrice],
+        };
+      }
+      // if (date_in !== undefined && date_out !== undefined) {
+      //   whereConditions["$reservation.date_in$"] = {
+      //     [Op.notBetween]: [date_in, date_out],
+      //   };
+      //   whereConditions["$reservation.date_out$"] = {
+      //     [Op.notBetween]: [date_in, date_out],
+      //   };
+      // }
+      if (date_in !== undefined && date_out !== undefined) {
+        whereConditions["$reservation.date_in$"] = {
+          
+          [Op.notBetween]: [date_in, date_out],
+          
         };
       }
       if (hotel_type !== undefined) {
