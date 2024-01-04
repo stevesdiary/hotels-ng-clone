@@ -12,14 +12,15 @@ const helmet = require('helmet');
 const db = require('./config/dbConfig');
 const app = express();
 const cron = require('node-cron');
-const register_route = require('./routes/register');
-const login_route = require('./routes/login');
-const user_route = require('./routes/user');
-const hotel_route = require('./routes/hotel');
-const room_route = require('./routes/room');
-const facility_route = require('./routes/facility');
-const ratings_route = require('./routes/ratingsAndReviews');
-const reservation_route = require('./routes/reservation');
+const registerRoute = require('./routes/register');
+const loginRoute = require('./routes/login');
+const passwordResetRoute = require('./routes/passwordReset');
+const userRoute = require('./routes/user');
+const hotelRoute = require('./routes/hotel');
+const roomRoute = require('./routes/room');
+const facilityRoute = require('./routes/facility');
+const ratingsRoute = require('./routes/ratingsAndReviews');
+const reservationRoute = require('./routes/reservation');
 const path = require("path");
 const multer = require("multer");
 const fileUpload = require('express-fileupload');
@@ -56,14 +57,15 @@ let upload = multer({
    storage: storage,
    // limits: {fileSize: 1000000},
 });
-app.use('/', register_route);
-app.use('/', login_route);
-app.use('/', user_route);
-app.use('/', hotel_route);
-app.use('/', room_route);
-app.use('/', facility_route);
-app.use('/', ratings_route);
-app.use('/', reservation_route);
+app.use('/', registerRoute);
+app.use('/', loginRoute);
+app.use('/', passwordResetRoute);
+app.use('/', userRoute);
+app.use('/', hotelRoute);
+app.use('/', roomRoute);
+app.use('/', facilityRoute);
+app.use('/', ratingsRoute);
+app.use('/', reservationRoute);
 app.get('/', (req, res) => {
    res.send("Description.")
 })
