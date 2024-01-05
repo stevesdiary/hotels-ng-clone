@@ -4,6 +4,6 @@ const router = express.Router();
 
 const passwordResetController = require('../controllers/passwordResetController');
 
-router.put('/updatepassword', passwordResetController.updatePassword);
+router.put('/:token', passwordResetController.resetPassword);
 
 module.exports = router;

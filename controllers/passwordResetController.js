@@ -2,12 +2,13 @@ const express = require("espress");
 const bcrypt = require("bcryptjs");
 const saltRounds = 11;
 const jwt = require("jsonwebtoken");
-const user = require("../models");
+const {User} = require("../models");
 const passwordResetController = {
   resetPassword: async (req, res) => {
     try {
       const { token } = req.params;
-      const { password: newPassword, email } = req.body;
+      const { password: newPassword, confirmPassword, email } = req.body;
+
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       console.log({ tokenDecoded: decoded });
 
@@ -34,31 +35,32 @@ const passwordResetController = {
       if (!newPassword) {
         return res.status(401).send("Password is required");
       }
-
-      const user = await Admin.findOne({ where: { email: decodedEmail } });
-      if (!user) {
-        return res.status(404).send("User not found with " + decodedEmail);
+      if (newPassword !== confirmPassword) {
+        res.status(409).send({message: 'Password do not match, check and try again.'});
       }
-
+      
       //Set a new password for the user
       const hashed = await bcrypt.hash(newPassword, saltRounds);
-      user.password = hashed;
+      User.password = hashed;
 
       try {
         const user = await User.findOne({ where: { email: decodedEmail } });
         console.log({ user});
+        if (!user) {
+          return res.status(404).send(`User not found with ${decodedEmail}. You need to register first.`);
+        }
         if (user) {
           (user.email = email), (user.password = hashed);
           const saveResult = await user.save();
           console.log({ saveResult });
 
           console.log("Password updated successfully");
-          return res.status(200).send("Password updated successfully");
+          return res.status(200).send({Message: "Password updated successfully, you can now login with your new password."});
         }
 
-        return res.send("User not found with " + decodedEmail);
+        return res.send({Message: `User not found with ${decodedEmail}`});
       } catch (err) {
-        console.log(err.message);
+        console.error(err);
         return res.send(err.message);
       }
       //throw new Error('Something went wrong')
