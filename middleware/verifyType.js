@@ -14,4 +14,4 @@ const verifyType = (allowedType) => {
     }
   };
 };
-module.exports = verifyType;
+export default verifyType;
