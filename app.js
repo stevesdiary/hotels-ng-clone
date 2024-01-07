@@ -11,7 +11,7 @@ const cors = require ("cors");
 const helmet = require('helmet');
 const db = require('./config/dbConfig');
 const app = express();
-const cron = require('node-cron');
+const forgotPasswordRoute = require('./routes/forgotPassword')
 const registerRoute = require('./routes/register');
 const loginRoute = require('./routes/login');
 const passwordResetRoute = require('./routes/passwordReset');
@@ -60,6 +60,7 @@ let upload = multer({
 app.use('/', registerRoute);
 app.use('/', loginRoute);
 app.use('/', passwordResetRoute);
+app.use('/', forgotPasswordRoute);
 app.use('/', userRoute);
 app.use('/', hotelRoute);
 app.use('/', roomRoute);
