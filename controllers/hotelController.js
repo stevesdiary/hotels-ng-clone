@@ -7,7 +7,7 @@ const {
   Reservation,
   Sequelize,
 } = require("../models");
-const { logging } = require("googleapis/build/src/apis/logging");
+// const { logging } = require("googleapis/build/src/apis/logging");
 const Op = Sequelize.Op;
 
 const hotelController = {
@@ -39,7 +39,6 @@ const hotelController = {
         contactPhone,
         termsAndConditions,
       });
-      // console.log('Record created', createHotel);
       return res
         .status(201)
         .send({ message: "Record created.", data: createHotel });
@@ -54,7 +53,7 @@ const hotelController = {
       // return str.charAt(0).toUpperCase() + str.slice(1);
       // return str.replace(/\b\w/g, (char) => char.toUpperCase());
       // }
-      const hotel_type = req.query.hotelType;
+      const hotelType = req.query.hotelType;
       const search = req.query.search;
       const {
         restaurant,
@@ -85,8 +84,6 @@ const hotelController = {
         carHire,
         electricity24h
       };
-      const dateIn = req.query.dateIn;
-      const dateOut = req.query.dateOut;
       const minPrice = req.query.minPrice || 0;
       const maxPrice = req.query.maxPrice;
       let nameCitySearch = [];
@@ -228,7 +225,70 @@ const hotelController = {
   },
   findHotelByDate: async (req, res) => {
     try{
+      const dateIn = req.query.dateIn;
+      const dateOut = req.query.dateOut;
+      const whereConditions = {};
+      if (dateIn !== undefined && dateOut !== undefined) {
+        whereConditions["$reservation.dateIn$"] = {
+          
+          [Op.between]: [dateIn, dateOut],
+          
+        };
+      }
+      const { count, rows: hotels } = await Hotel.findAndCountAll({
+        // logging: console.log,
+        distinct: true,
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "deletedAt"],
+        },
+        where: whereConditions,
+        include: [
+          {
+            model: Room,
+            as: "rooms",
+            attributes: {
+              exclude: [
+                "id",
+                "hotelId",
+                "createdAt",
+                "updatedAt",
+                "deletedAt",
+              ],
+            },
+          },
+          {
+            model: Facility,
+            as: "facilities",
+            attributes: {
+              exclude: ["createdAt", "updatedAt", "deletedAt"],
+            },
+          },
+          {
+            model: RatingAndReview,
+            as: "ratingAndReview",
+            attributes: {
+              exclude: ["createdAt", "updatedAt", "deletedAt"],
+            },
+          },
+          {
+            model: Reservation,
+            as: "reservation",
+            attributes: {
+              exclude: ["createdAt", "updatedAt", "deletedAt"],
+            },
+          },
+        ],
+      });
 
+      if (count == 0) {
+        return res.status(404).send({
+          Message:
+            "No record found for this date range.",
+        });
+      }
+      return res
+        .status(200)
+        .send({ Message: `Hotel records found.`, Count: count, Hotel: hotels });
     }
     catch(err){
       console.error(err);

@@ -9,6 +9,8 @@ router.get('/findall', hotelController.findAllHotel);
 
 router.get('/findone/:id', hotelController.findOneHotel);
 
+router.get('/bydate', hotelController.findHotelByDate);
+
 router.put('/update/:id', hotelController.updateHotel);
 
 router.delete('/delete/:id', hotelController.deleteHotel);
