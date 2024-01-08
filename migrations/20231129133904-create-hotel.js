@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      hotel_id: {
+      hotelId: {
         type: Sequelize.UUID
       },
       name: {
@@ -27,19 +27,19 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
-      hotel_type: {
+      hotelType: {
         type: Sequelize.STRING
       },
-      number_of_rooms: {
+      numberOfRooms: {
         type: Sequelize.INTEGER
       },
-      contact_email: {
+      contactEmail: {
         type: Sequelize.STRING
       },
-      contact_phone: {
+      contactPhone: {
         type: Sequelize.INTEGER
       },
-      terms_and_conditions: {
+      termsAndConditions: {
         type: Sequelize.STRING
       },
       createdAt: {

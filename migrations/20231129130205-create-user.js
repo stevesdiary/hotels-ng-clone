@@ -8,13 +8,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID
       },
-      first_name: {
+      firstName: {
         type: Sequelize.STRING
       },
-      last_name: {
+      lastName: {
         type: Sequelize.STRING
       },
-      phone_number: {
+      phoneNumber: {
         type: Sequelize.INTEGER
       },
       email: {
