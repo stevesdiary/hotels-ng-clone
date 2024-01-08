@@ -40,7 +40,7 @@ const reservationController = {
           {
             model: Hotel,
             attributes: {
-              exclude: [ 'id', 'description', 'terms_and_condition', 'createdAt', 'updatedAt', 'deletedAt' ]
+              exclude: [ 'id', 'description', 'terms_and_conditions', 'createdAt', 'updatedAt', 'deletedAt' ]
             },
             include: [
               {
@@ -96,7 +96,7 @@ const reservationController = {
             model: Hotel,
             // as: 'hotel',
             attributes: {
-              exclude: [ 'id', 'description', 'terms_and_condition', 'createdAt', 'updatedAt', 'deletedAt' ]
+              exclude: [ 'id', 'description', 'terms_and_conditions', 'createdAt', 'updatedAt', 'deletedAt' ]
             },
             include: [
               {

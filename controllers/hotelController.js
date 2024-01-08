@@ -24,7 +24,7 @@ const hotelController = {
         numberOfRooms,
         contactEmail,
         contactPhone,
-        termsAndCondition,
+        termsAndConditions,
       } = req.body;
       const createHotel = await Hotel.create({
         id,
@@ -37,7 +37,7 @@ const hotelController = {
         numberOfRooms,
         contactEmail,
         contactPhone,
-        termsAndCondition,
+        termsAndConditions,
       });
       // console.log('Record created', createHotel);
       return res
@@ -308,7 +308,7 @@ const hotelController = {
         numberOfRooms,
         contactEmail,
         contactPhone,
-        termsAndCondition,
+        termsAndConditions,
       } = req.body;
       const updateUser = await Hotel.update(
         {
@@ -321,7 +321,7 @@ const hotelController = {
           numberOfRooms,
           contactEmail,
           contactPhone,
-          termsAndCondition,
+          termsAndConditions,
         },
         { where: { id } }
       );

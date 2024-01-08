@@ -60,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      termsAndCondition: {
+      termsAndConditions: {
         type: DataTypes.STRING,
         allowNull: true,
       },

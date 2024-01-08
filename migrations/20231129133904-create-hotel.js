@@ -39,7 +39,7 @@ module.exports = {
       contact_phone: {
         type: Sequelize.INTEGER
       },
-      terms_and_condition: {
+      terms_and_conditions: {
         type: Sequelize.STRING
       },
       createdAt: {
