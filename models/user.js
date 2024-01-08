@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.hasMany(models.Reservation, {
-        foreignKey: "user_id",
+        foreignKey: "userId",
         type: DataTypes.UUID,
       });
     }
@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         // defaultValue: DataTypes.UUIDV4
       },
-      first_name: {
+      firstName: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      last_name: {
+      lastName: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true
       },
-      phone_number: {
+      phoneNumber: {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {

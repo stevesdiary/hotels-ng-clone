@@ -11,9 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Reservation.belongsTo(models.Hotel, {foreignKey: 'hotel_id', type: DataTypes.UUID });
-      Reservation.belongsTo(models.User, {foreignKey: 'user_id', type: DataTypes.UUID });
-      Reservation.belongsTo(models.Room, {foreignKey: 'room_id', type: DataTypes.UUID });
+      Reservation.belongsTo(models.Hotel, {foreignKey: 'hotelId', type: DataTypes.UUID });
+      Reservation.belongsTo(models.User, {foreignKey: 'userId', type: DataTypes.UUID });
+      Reservation.belongsTo(models.Room, {foreignKey: 'roomId', type: DataTypes.UUID });
     }
   }
   Reservation.init({
@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       defaultValue: UUIDV4,
     },
-    hotel_id: {
+    hotelId: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -31,11 +31,11 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    user_id: {
+    userId: {
       type: DataTypes.UUIDV4,
       allowNull: false,
     },
-    room_id: {
+    roomId: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -44,11 +44,11 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    date_in: {
+    dateIn: {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    date_out: {
+    dateOut: {
       type: DataTypes.DATE,
       allowNull: false,
     },
@@ -57,7 +57,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: "active"
     },
-    payment_status: DataTypes.BOOLEAN
+    paymentStatus: DataTypes.BOOLEAN
   }, {
     sequelize,
     tableName: "Reservation",

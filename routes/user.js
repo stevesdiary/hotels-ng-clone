@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const verifyType = require('../middleware/verifyType').default;
+const verifyType = require('../middleware/verifyType');
 const userController = require('../controllers/usersController');
 const { authentication } = require('../middleware/authentication');
 

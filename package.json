@@ -17,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "cloudinary": "^1.41.0",
     "cors": "^2.8.5",
@@ -33,6 +34,7 @@
     "mysql": "^2.18.1",
     "mysql2": "^3.6.5",
     "node-cron": "^3.0.3",
+    "nodemailer": "^6.9.8",
     "path": "^0.12.7",
     "sequelize": "^6.35.1",
     "sequelize-cli": "^6.6.2",

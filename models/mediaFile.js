@@ -21,15 +21,15 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true,
       },
-      hotel_id: {
+      hotelId: {
         type: DataTypes.UUID,
         allowNull: false,
       },
-      room_id: {
+      roomId: {
         type: DataTypes.UUID,
         allowNull: false,
       },
-      file_url: DataTypes.STRING,
+      fileUrl: DataTypes.STRING,
       allowNull: false,
     },
     {

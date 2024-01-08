@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Room.hasMany(models.Reservation, { foreignKey: 'room_id', as: 'rooms' });
-      Room.belongsTo(models.Hotel, { foreignKey: 'hotel_id' });
+      Room.hasMany(models.Reservation, { foreignKey: 'roomId', as: 'rooms' });
+      Room.belongsTo(models.Hotel, { foreignKey: 'hotelId' });
     }
   }
   Room.init(
@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true,
       },
-      hotel_id: {
+      hotelId: {
         type: DataTypes.UUID,
         allowNull: false,
       },
@@ -39,11 +39,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
-      check_in: {
+      checkIn: {
         type: DataTypes.TIME,
         allowNull: false,
       },
-      check_out: {
+      checkOut: {
         type: DataTypes.TIME,
         allowNull: false,
       },

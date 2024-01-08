@@ -29,14 +29,14 @@ const port = process.env.LOCAL_PORT || 3000 ;
 require('dotenv').config();
 // const routes = require("./routes");
 cloudinary.config({
-   cloud_name: process.env.CLOUD_NAME,
-   api_key: process.env.CLOUDINARY_API_KEY,
-   api_secret: process.env.CLOUDINARY_API_SECRET,
+   cloudName: process.env.CLOUD_NAME,
+   apiKey: process.env.CLOUDINARY_API_KEY,
+   apiSecret: process.env.CLOUDINARY_API_SECRET,
    secure: true,
 });
 const options = {
-   use_filename: true,
-   unique_filename: false,
+   useFilename: true,
+   uniqueFilename: false,
    overwrite: false,
 };
 app.use(express.json());
@@ -88,7 +88,7 @@ app.post('/upload', upload.single('image', { folder: "hotels-ng" },), async(req,
       
       // console.log('Upload status', imagePath)
       const result = await cloudinary.uploader.upload(imagePath, options);
-      console.log("Upload successful! Here's the image url: ", result.secure_url)
+      console.log("Upload successful! Here's the image url: ", result.secureUrl)
       await fs.unlink("./uploads/" + req.file.filename, (err) => {
          if (err) {
             console.error(err);

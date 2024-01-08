@@ -21,24 +21,24 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true,
       },
-      hotel_id: {
+      hotelId: {
         type: DataTypes.UUID,
         allowNull: false,
       },
-      user_id: {
+      userId: {
         type: DataTypes.UUID,
         allowNull: false,
       },
-      review_title: {
+      reviewTitle: {
         type: DataTypes.STRING,
         allowNull: false,
       },
       date: DataTypes.DATE,
-      first_name: {
+      firstName: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      last_name: {
+      lastName: {
         type: DataTypes.STRING,
         allowNull: true,
       },

@@ -1,3 +1,4 @@
+// const express = require('express');
 const verifyType = (allowedType) => {
   return (req, res, next) => {
     try {
@@ -14,4 +15,5 @@ const verifyType = (allowedType) => {
     }
   };
 };
-export default verifyType;
+
+module.exports = verifyType;

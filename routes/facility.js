@@ -1,5 +1,5 @@
 const express = require('express');
-const verifyType = require('../middleware/verifyType').default;
+const verifyType = require('../middleware/verifyType');
 const router = express.Router();
 
 const facilityController = require('../controllers/facilityController');

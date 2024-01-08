@@ -1,4 +1,4 @@
-const express = require("espress");
+const express = require("express");
 const bcrypt = require("bcryptjs");
 const saltRounds = 11;
 const jwt = require("jsonwebtoken");

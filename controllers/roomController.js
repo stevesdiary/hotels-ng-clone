@@ -4,17 +4,17 @@ const {Room, Hotel} = require('../models');
 const roomController = {
   createRoom: async (req, res) => {
     try{
-      const contact_email = req.body.contact_email;
+      const contactEmail = req.body.contactEmail;
       const id = uuidv4();
       const { category, capacity, deals, description, availability, price,  condition } = req.body;
       const discountOff = Math.round(price * (deals / 100));
-      const discount = price - discountOff;
-      const hotel = await Hotel.findOne({where: {contact_email}});
-      const hotel_id = hotel.id;
-      // console.log(hotel_id, deals, price,  discount )
-      const check_in = req.body.check_in;
-      const check_out = req.body.check_out;
-      const room = await Room.create({id, hotel_id, category, capacity, deals, check_in, check_out, description, availability, price, discount, condition});
+      const discountedPrice = price - discountOff;
+      const hotel = await Hotel.findOne({where: {contactEmail}});
+      const hotelId = hotel.id;
+      // console.log(hotelId, deals, price,  discount )
+      const checkIn = req.body.checkIn;
+      const checkOut = req.body.checkOut;
+      const room = await Room.create({id, hotelId, category, capacity, deals, checkIn, checkOut, description, availability, price, discountedPrice, condition});
       console.log('Data created', room)
       return res.status(201).send({message: 'Room created successfully', room})
     }
@@ -50,8 +50,8 @@ const roomController = {
       const id = req.params.id;
       const {category, capacity, deals, description, availability, price, condition } = req.body;
       const discountOff = Math.round(price * (deals / 100));
-      const discount = price - discountOff;
-      const updateRoom = await Room.update({category, capacity, description, availability, deals, price, discount, condition }, {where: {id}});
+      const discountedPrice = price - discountOff;
+      const updateRoom = await Room.update({category, capacity, description, availability, deals, price, discountedPrice, condition }, {where: {id}});
       return res.status(200).send({message: `Record with id ${id} has been updated successfully`, updateRoom});
     }
     catch(err){
