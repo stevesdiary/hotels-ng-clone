@@ -20,11 +20,11 @@ const hotelController = {
         city,
         state,
         description,
-        hotel_type,
-        number_of_rooms,
-        contact_email,
-        contact_phone,
-        terms_and_condition,
+        hotelType,
+        numberOfRooms,
+        contactEmail,
+        contactPhone,
+        termsAndCondition,
       } = req.body;
       const createHotel = await Hotel.create({
         id,
@@ -33,11 +33,11 @@ const hotelController = {
         city,
         state,
         description,
-        hotel_type,
-        number_of_rooms,
-        contact_email,
-        contact_phone,
-        terms_and_condition,
+        hotelType,
+        numberOfRooms,
+        contactEmail,
+        contactPhone,
+        termsAndCondition,
       });
       // console.log('Record created', createHotel);
       return res
@@ -54,39 +54,39 @@ const hotelController = {
       // return str.charAt(0).toUpperCase() + str.slice(1);
       // return str.replace(/\b\w/g, (char) => char.toUpperCase());
       // }
-      const hotel_type = req.query.hotel_type;
+      const hotel_type = req.query.hotelType;
       const search = req.query.search;
       const {
         restaurant,
-        bar_launge,
+        barLaunge,
         gym,
-        room_service,
-        wifi_internet,
+        roomService,
+        wifiInternet,
         dstv,
         security,
-        swimming_pool,
+        swimmingPool,
         cctv,
-        front_desk_24h,
-        car_hire,
-        electricity_24h
+        frontDesk24h,
+        carHire,
+        electricity24h
       } = req.query;
       
       const facilities = {
         restaurant,
-        bar_launge,
+        barLaunge,
         gym,
-        room_service,
-        wifi_internet,
+        roomService,
+        wifiInternet,
         dstv,
         security,
-        swimming_pool,
+        swimmingPool,
         cctv,
-        front_desk_24h,
-        car_hire,
-        electricity_24h
+        frontDesk24h,
+        carHire,
+        electricity24h
       };
-      const date_in = req.query.date_in;
-      const date_out = req.query.date_out;
+      const dateIn = req.query.dateIn;
+      const dateOut = req.query.dateOut;
       const minPrice = req.query.minPrice || 0;
       const maxPrice = req.query.maxPrice;
       let nameCitySearch = [];
@@ -115,47 +115,49 @@ const hotelController = {
       //     [Op.notBetween]: [date_in, date_out],
       //   };
       // }
-      if (date_in !== undefined && date_out !== undefined) {
+
+      //SEparate this endpoint to filter by 
+      if (dateIn !== undefined && dateOut !== undefined) {
         whereConditions["$reservation.date_in$"] = {
           
-          [Op.notBetween]: [date_in, date_out],
+          [Op.between]: [dateIn, dateOut],
           
         };
       }
-      if (hotel_type !== undefined) {
-        whereConditions["$hotel.hotel_type$"] = {
-          [Op.like]: [hotel_type],
+      if (hotelType !== undefined) {
+        whereConditions["$hotel.hotelType$"] = {
+          [Op.like]: [hotelType],
         };
       }
       if (facilities !== undefined) {
         const facilityConditions = [
           "restaurant",
-          "bar_launge",
+          "barLaunge",
           "gym",
-          "room_service",
-          "wifi_internet",
+          "roomService",
+          "wifiInternet",
           "dstv",
           "security",
-          "swimming_pool",
+          "swimmingPool",
           "cctv",
-          "front_desk_24h",
-          "car_hire",
-          "electricity_24h",
+          "frontDesk24h",
+          "carHire",
+          "electricity24h",
         ];
       
         const facilityValues = [
           restaurant,
-          bar_launge,
+          barLaunge,
           gym,
-          room_service,
-          wifi_internet,
+          roomService,
+          wifiInternet,
           dstv,
           security,
-          swimming_pool,
+          swimmingPool,
           cctv,
-          front_desk_24h,
-          car_hire,
-          electricity_24h,
+          frontDesk24h,
+          carHire,
+          electricity24h,
         ];
       
         facilityConditions.forEach((condition, index) => {
@@ -178,7 +180,7 @@ const hotelController = {
             attributes: {
               exclude: [
                 "id",
-                "hotel_id",
+                "hotelId",
                 "createdAt",
                 "updatedAt",
                 "deletedAt",
@@ -224,6 +226,15 @@ const hotelController = {
       return res.status(500).send({ Message: "An error occoured", Error: err });
     }
   },
+  findHotelByDate: async (req, res) => {
+    try{
+
+    }
+    catch(err){
+      console.error(err);
+      return res.status(500).send({ Message: "An error occoured", Error: err });
+    }
+  },
 
   findOneHotel: async (req, res) => {
     try {
@@ -240,7 +251,7 @@ const hotelController = {
             attributes: {
               exclude: [
                 "id",
-                "hotel_id",
+                "hotelId",
                 "createdAt",
                 "updatedAt",
                 "deletedAt",
@@ -293,11 +304,11 @@ const hotelController = {
         city,
         state,
         description,
-        hotel_type,
-        number_of_rooms,
-        contact_email,
-        contact_phone,
-        terms_and_condition,
+        hotelType,
+        numberOfRooms,
+        contactEmail,
+        contactPhone,
+        termsAndCondition,
       } = req.body;
       const updateUser = await Hotel.update(
         {
@@ -306,11 +317,11 @@ const hotelController = {
           city,
           state,
           description,
-          hotel_type,
-          number_of_rooms,
-          contact_email,
-          contact_phone,
-          terms_and_condition,
+          hotelType,
+          numberOfRooms,
+          contactEmail,
+          contactPhone,
+          termsAndCondition,
         },
         { where: { id } }
       );

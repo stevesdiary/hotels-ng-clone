@@ -9,11 +9,11 @@ module.exports = (sequelize, DataTypes) => {
   class Hotel extends Model {
     static associate(models) {
       // define association here
-      Hotel.hasMany(models.Room, { foreignKey: 'hotel_id', type: DataTypes.UUID, as: 'rooms' });
-      Hotel.hasMany(models.Facility, { foreignKey: 'hotel_id', type: DataTypes.UUID, as: 'facilities' });
-      // Hotel.hasMany(models.Media_file, { foreignKey: 'hotel_id', type: DataTypes.UUID });
-      Hotel.hasMany(models.RatingAndReview, { foreignKey: 'hotel_id', type: DataTypes.UUID, as: 'ratingAndReview' });
-      Hotel.hasMany(models.Reservation, { foreignKey: 'hotel_id', type: DataTypes.UUID, as: 'reservation' });
+      Hotel.hasMany(models.Room, { foreignKey: 'hotelId', type: DataTypes.UUID, as: 'rooms' });
+      Hotel.hasMany(models.Facility, { foreignKey: 'hotelId', type: DataTypes.UUID, as: 'facilities' });
+      // Hotel.hasMany(models.Media_file, { foreignKey: 'hotelId', type: DataTypes.UUID });
+      Hotel.hasMany(models.RatingAndReview, { foreignKey: 'hotelId', type: DataTypes.UUID, as: 'ratingAndReview' });
+      Hotel.hasMany(models.Reservation, { foreignKey: 'hotelId', type: DataTypes.UUID, as: 'reservation' });
     }
   }
 
@@ -44,23 +44,23 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      hotel_type: {
+      hotelType: {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      number_of_rooms: {
+      numberOfRooms: {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
-      contact_email: {
+      contactEmail: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      contact_phone: {
+      contactPhone: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      terms_and_condition: {
+      termsAndCondition: {
         type: DataTypes.STRING,
         allowNull: true,
       },
