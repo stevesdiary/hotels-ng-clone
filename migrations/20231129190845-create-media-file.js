@@ -8,16 +8,16 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID
       },
-      file_id: {
+      fileId: {
         type: Sequelize.UUID
       },
-      hotel_id: {
+      hotelId: {
         type: Sequelize.UUID
       },
-      room_id: {
+      roomId: {
         type: Sequelize.UUID
       },
-      file_url: {
+      fileUrl: {
         type: Sequelize.STRING
       },
       createdAt: {

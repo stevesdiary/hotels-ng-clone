@@ -84,6 +84,7 @@ const hotelController = {
         carHire,
         electricity24h
       };
+      
       const minPrice = req.query.minPrice || 0;
       const maxPrice = req.query.maxPrice;
       let nameCitySearch = [];
@@ -292,6 +293,75 @@ const hotelController = {
     }
     catch(err){
       console.error(err);
+      return res.status(500).send({ Message: "An error occoured", Error: err });
+    }
+  },
+  topHotelsByState: async (req, res) => {
+    try{
+      const state = req.query.state;
+      const whereConditions = {};
+      if (state !== undefined) {
+        whereConditions["$hotels.state$"] = {
+          [Op.eq]: [state],
+        };
+      }
+      const { count, rows: hotels } = await Hotel.findAndCountAll({
+        // logging: console.log,
+        distinct: true,
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "deletedAt"],
+          include: [Sequelize.literal('(SELECT COUNT(*) FROM "Reservations" WHERE "Reservations"."hotel_id" = "Hotel"."id")'),
+            'reservationCount',
+          ],
+        },
+        where: whereConditions,
+        include: [
+          {
+            model: Room,
+            as: "rooms",
+            attributes: {
+              exclude: [
+                "id",
+                "hotelId",
+                "createdAt",
+                "updatedAt",
+                "deletedAt",
+              ],
+            },
+          },
+          {
+            model: Facility,
+            as: "facilities",
+            attributes: {
+              exclude: ["createdAt", "updatedAt", "deletedAt"],
+            },
+          },
+          {
+            model: RatingAndReview,
+            as: "ratingAndReview",
+            attributes: {
+              exclude: ["createdAt", "updatedAt", "deletedAt"],
+            },
+          },
+          {
+            model: Reservation,
+            as: "reservation",
+            attributes: {
+              exclude: ["createdAt", "updatedAt", "deletedAt"],
+              include: [[Sequelize.fn('COUNT',Sequelize.col('reservation.id')), 'reservationCount']],
+            },
+          },
+        ],
+        group: ['Hotel.id'],
+        order: [[Sequelize.literal('reservationCount'), 'DESC']],
+        limit: 6,
+      });
+
+      return res
+        .status(200)
+        .send({ Message: `Hotel records found.`, Count: count, Hotel: hotels });
+    }
+    catch(err){
       return res.status(500).send({ Message: "An error occoured", Error: err });
     }
   },

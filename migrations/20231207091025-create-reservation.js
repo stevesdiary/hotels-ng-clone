@@ -21,7 +21,7 @@ module.exports = {
       date: {
         type: Sequelize.DATE
       },
-      payment_status: {
+      paymentStatus: {
         type: Sequelize.BOOLEAN
       },
       createdAt: {

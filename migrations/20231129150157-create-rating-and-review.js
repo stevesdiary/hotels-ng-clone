@@ -8,22 +8,22 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID
       },
-      hotel_id: {
+      hotelId: {
         type: Sequelize.UUID
       },
-      user_id: {
+      userId: {
         type: Sequelize.UUID
       },
-      review_title: {
+      reviewTitle: {
         type: Sequelize.STRING
       },
       date: {
         type: Sequelize.DATE
       },
-      first_name: {
+      firstName: {
         type: Sequelize.STRING
       },
-      last_name: {
+      lastName: {
         type: Sequelize.STRING
       },
       review: {

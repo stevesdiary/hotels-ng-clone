@@ -11,19 +11,19 @@ module.exports = {
       hotelId: {
         type: Sequelize.UUID
       },
-      room_id: {
+      roomId: {
         type: Sequelize.UUID
       },
       category: {
         type: Sequelize.STRING
       },
-      num_of_toilet: {
+      numOfToilet: {
         type: Sequelize.INTEGER
       },
-      check_in: {
+      checkIn: {
         type: Sequelize.TIME
       },
-      check_out: {
+      checkOut: {
         type: Sequelize.TIME
       },
       description: {

@@ -8,25 +8,25 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID
       },
-      facility_id: {
+      facilityId: {
         type: Sequelize.UUID
       },
-      hotel_id: {
+      hotelId: {
         type: Sequelize.UUID
       },
       restaurant: {
         type: Sequelize.STRING
       },
-      bar_launge: {
+      barLaunge: {
         type: Sequelize.BOOLEAN
       },
       security: {
         type: Sequelize.BOOLEAN
       },
-      wifi_internet: {
+      wifiInternet: {
         type: Sequelize.BOOLEAN
       },
-      swimming_pool: {
+      swimmingPool: {
         type: Sequelize.BOOLEAN
       },
       dstv: {
@@ -38,19 +38,19 @@ module.exports = {
       cctv: {
         type: Sequelize.BOOLEAN
       },
-      car_hire: {
+      carHire: {
         type: Sequelize.BOOLEAN
       },
-      room_service: {
+      roomService: {
         type: Sequelize.BOOLEAN
       },
-      front_desk_24h: {
+      frontDesk24h: {
         type: Sequelize.BOOLEAN
       },
-      electricity_24h: {
+      electricity24h: {
         type: Sequelize.BOOLEAN
       },
-      car_park: {
+      carPark: {
         type: Sequelize.BOOLEAN
       },
       createdAt: {
