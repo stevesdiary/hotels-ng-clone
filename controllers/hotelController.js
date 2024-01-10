@@ -224,6 +224,78 @@ const hotelController = {
       return res.status(500).send({ Message: "An error occoured", Error: err });
     }
   },
+  topDeals: async (req, res) => {
+    try{
+      const state = req.query.state;
+      const whereConditions = {};
+      if (state !== undefined) {
+        whereConditions["$hotels.state$"] = {
+          [Op.eq]: [state],
+        };
+      }
+      const { count, rows: hotels } = await Hotel.findAndCountAll({
+        // logging: console.log,
+        distinct: true,
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "deletedAt"],
+          include: [
+              [
+                  Sequelize.literal('(SELECT COUNT(*) FROM `Rooms` WHERE `Rooms`.`deals` = `Room`.`deals`)'),
+                  'dealsCount',
+              ],
+          ],
+        },
+        where: whereConditions,
+        include: [
+          {
+            model: Room,
+            as: "rooms",
+            attributes: {
+              exclude: [
+                "id",
+                "hotelId",
+                "createdAt",
+                "updatedAt",
+                "deletedAt",
+              ],
+            },
+          },
+          {
+            model: Facility,
+            as: "facilities",
+            attributes: {
+              exclude: ["createdAt", "updatedAt", "deletedAt"],
+            },
+          },
+          {
+            model: RatingAndReview,
+            as: "ratingAndReview",
+            attributes: {
+              exclude: ["createdAt", "updatedAt", "deletedAt"],
+            },
+          },
+          {
+            model: Reservation,
+            as: "reservation",
+            attributes: {
+              exclude: ["createdAt", "updatedAt", "deletedAt"],
+            },
+          },
+        ],
+        group: ['Hotel.id'],
+        order: [[Sequelize.literal('dealsCount'), 'DESC']],
+        limit: 6,
+      });
+
+      return res
+        .status(200)
+        .send({ Message: `Hotel records found.`, Count: count, Hotel: hotels });
+    }
+    catch (err) {
+      console.error(err);
+      return res.status(500).send({ Message: "An error occoured", Error: err });
+    }
+  },
   findHotelByDate: async (req, res) => {
     try{
       const dateIn = req.query.dateIn;
@@ -440,7 +512,7 @@ const hotelController = {
         contactPhone,
         termsAndConditions,
       } = req.body;
-      const updateUser = await Hotel.update(
+      const updateHotel = await Hotel.update(
         {
           name,
           address,
@@ -455,11 +527,11 @@ const hotelController = {
         },
         { where: { id } }
       );
-      console.log("Record updated", createHotel);
+      console.log("Record updated", updateHotel);
       if (updateUser == 1) {
         return res
           .status(200)
-          .send({ Message: "Record updated.", Hotel: createHotel });
+          .send({ Message: "Record updated.", Hotel: updateHotel });
       } else {
         console.error(`Record not updated, there's an error`)
       }
@@ -487,4 +559,5 @@ const hotelController = {
     }
   },
 };
+
 module.exports = hotelController;

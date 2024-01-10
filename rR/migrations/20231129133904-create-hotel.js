@@ -1,16 +1,16 @@
 'use strict';
-
-const { UUID, UUIDV4 } = require('sequelize');
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Hotels', {
       id: {
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.UUID,
-        defaultValue: UUIDV4
+        type: Sequelize.INTEGER
+      },
+      hotelId: {
+        type: Sequelize.UUID
       },
       name: {
         type: Sequelize.STRING
@@ -19,7 +19,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       city: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       state: {
         type: Sequelize.STRING
@@ -37,7 +37,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       contactPhone: {
-        type: Sequelize.BIGINT
+        type: Sequelize.INTEGER
       },
       termsAndConditions: {
         type: Sequelize.STRING

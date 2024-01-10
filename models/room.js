@@ -74,7 +74,6 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'Rooms',
       modelName: 'Room',
       paranoid: false,
-      pluralize: false,
     }
   );
   return Room;

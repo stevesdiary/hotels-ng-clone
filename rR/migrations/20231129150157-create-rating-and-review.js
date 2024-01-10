@@ -1,46 +1,48 @@
 'use strict';
-
-const { UUID, UUIDV4 } = require('sequelize');
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Hotels', {
+    await queryInterface.createTable('RatingAndReview', {
       id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.UUID,
-        defaultValue: UUIDV4
+        type: Sequelize.UUID
       },
-      name: {
+      hotelId: {
+        type: Sequelize.UUID
+      },
+      userId: {
+        type: Sequelize.UUID
+      },
+      reviewTitle: {
         type: Sequelize.STRING
       },
-      address: {
+      date: {
+        type: Sequelize.DATE
+      },
+      firstName: {
         type: Sequelize.STRING
       },
-      city: {
+      lastName: {
         type: Sequelize.STRING
       },
-      state: {
+      review: {
         type: Sequelize.STRING
       },
-      description: {
-        type: Sequelize.STRING
-      },
-      hotelType: {
-        type: Sequelize.STRING
-      },
-      numberOfRooms: {
+      cleanliness: {
         type: Sequelize.INTEGER
       },
-      contactEmail: {
-        type: Sequelize.STRING
+      comfort: {
+        type: Sequelize.INTEGER
       },
-      contactPhone: {
-        type: Sequelize.BIGINT
+      service: {
+        type: Sequelize.INTEGER
       },
-      termsAndConditions: {
-        type: Sequelize.STRING
+      security: {
+        type: Sequelize.INTEGER
+      },
+      location: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -53,6 +55,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Hotels');
+    await queryInterface.dropTable('RatingAndReview');
   }
 };

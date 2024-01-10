@@ -2,29 +2,23 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Reservations', {
+    await queryInterface.createTable('Media_files', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID
       },
+      fileId: {
+        type: Sequelize.UUID
+      },
       hotelId: {
-        type: Sequelize.STRING
+        type: Sequelize.UUID
       },
       roomId: {
+        type: Sequelize.UUID
+      },
+      fileUrl: {
         type: Sequelize.STRING
-      },
-      dateIn: {
-        type: Sequelize.DATE
-      },
-      dateOut: {
-        type: Sequelize.DATE
-      },
-      status: {
-        type: Sequelize.STRING
-      },
-      paymentStatus: {
-        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
@@ -37,6 +31,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Reservations');
+    await queryInterface.dropTable('Media_files');
   }
 };

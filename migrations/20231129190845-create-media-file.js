@@ -2,13 +2,10 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Media_files', {
+    await queryInterface.createTable('MediaFiles', {
       id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.UUID
-      },
-      fileId: {
         type: Sequelize.UUID
       },
       hotelId: {
@@ -31,6 +28,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Media_files');
+    await queryInterface.dropTable('MediaFiles');
   }
 };

@@ -7,6 +7,8 @@ router.post('/createhotel', hotelController.createHotel);
 
 router.get('/findall', hotelController.findAllHotel);
 
+router.get('/topdeals', hotelController.topDeals);
+
 router.get('/tophotels', hotelController.topHotelsByState);
 
 router.get('/findone/:id', hotelController.findOneHotel);

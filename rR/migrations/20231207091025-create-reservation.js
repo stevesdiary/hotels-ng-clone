@@ -5,23 +5,21 @@ module.exports = {
     await queryInterface.createTable('Reservations', {
       id: {
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
+        type: Sequelize.INTEGER
+      },
+      id: {
         type: Sequelize.UUID
       },
-      hotelId: {
+      hotel: {
         type: Sequelize.STRING
       },
-      roomId: {
+      room: {
         type: Sequelize.STRING
       },
-      dateIn: {
+      date: {
         type: Sequelize.DATE
-      },
-      dateOut: {
-        type: Sequelize.DATE
-      },
-      status: {
-        type: Sequelize.STRING
       },
       paymentStatus: {
         type: Sequelize.BOOLEAN

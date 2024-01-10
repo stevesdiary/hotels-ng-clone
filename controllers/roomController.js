@@ -6,15 +6,20 @@ const roomController = {
     try{
       const contactEmail = req.body.contactEmail;
       const id = uuidv4();
-      const { category, capacity, deals, description, availability, price,  condition } = req.body;
+      console.log(id);
+      const { category, capacity, checkIn, deals, checkOut, description, availability, discount, price, condition } = req.body;
       const discountOff = Math.round(price * (deals / 100));
       const discountedPrice = price - discountOff;
-      const hotel = await Hotel.findOne({where: {contactEmail}});
+      const hotel = await Hotel.findOne({where: {contactEmail: contactEmail}});
+      console.log('here is the hotel', hotel, )
+      console.log(hotel.id)
+      if(!hotel){
+        return res.status(404).send({Message: 'Hotel not found so rooms cannot be created.'})
+      }
+
       const hotelId = hotel.id;
-      // console.log(hotelId, deals, price,  discount )
-      const checkIn = req.body.checkIn;
-      const checkOut = req.body.checkOut;
-      const room = await Room.create({id, hotelId, category, capacity, deals, checkIn, checkOut, description, availability, price, discountedPrice, condition});
+      // console.log(hotelId, deals, price, discount)
+      const room = await Room.create({id, hotelId, category, capacity, deals, checkIn, checkOut, description, availability, discount, price, discountedPrice, condition});
       console.log('Data created', room)
       return res.status(201).send({message: 'Room created successfully', room})
     }

@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       tableName: "MediaFile",
       modelName: "MediaFile",
-      paranoid: true,
+      paranoid: false,
     }
   );
   return MediaFile;

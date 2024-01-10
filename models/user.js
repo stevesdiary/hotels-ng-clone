@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true
       },
       phoneNumber: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
         allowNull: false,
         validate: {
           isPhoneNumber(value) {
@@ -95,8 +95,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       tableName: "user",
       modelName: "User",
-      paranoid: true,
-      pluralize: false,
+      paranoid: false,
     }
   );
   return User;

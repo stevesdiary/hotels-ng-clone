@@ -11,13 +11,10 @@ module.exports = {
       hotelId: {
         type: Sequelize.UUID
       },
-      roomId: {
-        type: Sequelize.UUID
-      },
       category: {
         type: Sequelize.STRING
       },
-      numOfToilet: {
+      capacity: {
         type: Sequelize.INTEGER
       },
       checkIn: {
@@ -31,6 +28,12 @@ module.exports = {
       },
       availability: {
         type: Sequelize.BOOLEAN
+      },
+      discount :{
+        type: Sequelize.FLOAT
+      },
+      deals: {
+        type: Sequelize.INTEGER
       },
       price: {
         type: Sequelize.INTEGER

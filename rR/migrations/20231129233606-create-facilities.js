@@ -8,6 +8,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID
       },
+      facilityId: {
+        type: Sequelize.UUID
+      },
       hotelId: {
         type: Sequelize.UUID
       },

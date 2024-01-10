@@ -69,7 +69,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       tableName: "Hotels",
       modelName: "Hotel",
-      paranoid: true,
+      paranoid: false,
       
     }
   );

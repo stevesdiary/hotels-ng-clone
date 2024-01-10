@@ -53,17 +53,16 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     status: {
-      type: DataTypes.ENUM("active", "used"),
+      type: DataTypes.ENUM('active', 'used', 'expired'),
       allowNull: false,
       defaultValue: "active"
     },
     paymentStatus: DataTypes.BOOLEAN
   }, {
     sequelize,
-    tableName: "Reservation",
+    tableName: "Reservations",
     modelName: 'Reservation',
-    pluralize: false,
-    paranoid: true,
+    paranoid: false,
   });
   return Reservation;
 };
