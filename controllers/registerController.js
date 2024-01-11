@@ -6,23 +6,23 @@ const saltRounds = bcrypt.genSaltSync(11);
 const registerController = {
   registerUser: async (req, res) => {
     try{
-      const { first_name, last_name, phone_number, email, password, confirm_password, type } = req.body;
+      const { firstName, lastName, phoneNumber, gender, email, password, confirmPassword, type } = req.body;
       const id = uuidv4();
-      console.log(email, "EMAIL", first_name);
-      const userExists = await User.findOne({ where: {email} });
-      
-      if(userExists && userExists.length > 0){
-        return res.status(409).json({ message: `User ${first_name} already exists, you can login with your password.`});
+      console.log(email, "EMAIL", firstName);
+      const userExists = await User.findOne({ where: { email } });
+
+      if (userExists) {
+        return res.status(409).json({ Message: `User ${firstName} already exists, you can login with your password.` });
       }
-      if (password !== confirm_password) {
+      if (password !== confirmPassword) {
         res.status(409).send({message: 'Password do not match, check and try again.'})
       }
-      if(password == confirm_password) {
+      if(password == confirmPassword) {
         const hashedPassword = await bcrypt.hash(password, saltRounds);
       
-      const user_record = await User.create({ id, first_name, last_name, phone_number, email, password: hashedPassword, type });
+      const userRecord = await User.create({ id, firstName, lastName, phoneNumber,gender, email, password: hashedPassword, type });
       // console.log("User created", user_record);
-      return res.status(201).send({ message: `User record for ${first_name} has been created successfully`, user_record })
+      return res.status(201).send({ Message: `User record for ${firstName} has been created successfully`, userRecord });
       }
     }catch(err) {
       console.log(err)
