@@ -32,6 +32,9 @@ module.exports = {
       discount :{
         type: Sequelize.FLOAT
       },
+      discountCode :{
+        type: Sequelize.STRING
+      },
       deals: {
         type: Sequelize.INTEGER
       },

@@ -64,6 +64,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
+      discountCode: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
       condition: {
         type: DataTypes.UUIDV4,
         allowNull: false,
