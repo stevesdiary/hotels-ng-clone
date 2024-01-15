@@ -7,13 +7,13 @@ const ratingsAdnReviewController = {
   createRating: async (req, res) => {
     try{
       const date = moment().format('YYYY-MM-DD hh:mm:ss');
-      const user_id = req.params.user_id;
-      const userData =  await User.findOne({where: {id: user_id }});
-      first_name = userData.first_name;
-      last_name = userData.last_name;
+      const userId = req.params.userId;
+      const userData =  await User.findOne({where: {id: userId }});
+      firstName = userData.firstName;
+      lastName = userData.lastName;
       const id = uuidv4();
-      const { hotel_id, review_title, review, like, cleanliness, comfort, service, security, location } = req.body;
-      const ratings = await RatingAndReview.create({id, hotel_id, user_id, review_title, date, first_name, last_name, review, like, cleanliness, comfort, service, security, location});
+      const { hotelId, reviewTitle, review, like, cleanliness, comfort, service, security, location } = req.body;
+      const ratings = await RatingAndReview.create({id, hotelId, userId, reviewTitle, date, firstName, lastName, review, like, cleanliness, comfort, service, security, location});
       return res.status(201).send({message: 'Ratings created', Record: ratings});
     }catch(err){
       return res.status(500).send({message: 'Error occoured', Error: err})
@@ -22,13 +22,13 @@ const ratingsAdnReviewController = {
 
   // like: async (req, res) => {
   //   try{
-  //     const {id, hotel_id, user_id} =  req.body;
-  //     const likeExists = await RatingAndReview.findOne({ where: { hotel_id, user_id }});
+  //     const {id, hotelId, userId} =  req.body;
+  //     const likeExists = await RatingAndReview.findOne({ where: { hotelId, userId }});
   //     if(likeExists){
   //       return res.status(403).send({message: 'User already liked the hotel'})
   //     }
   //     if(!likeExists){
-  //       const like = await RatingAndReview.updateRating({ like: true }, { where: { user_id, hotel_id } });
+  //       const like = await RatingAndReview.updateRating({ like: true }, { where: { userId, hotelId } });
   //     }
       
   //   }
@@ -62,10 +62,10 @@ const ratingsAdnReviewController = {
   updateRating: async (req, res) => {
     try{
       const id = req.params.id;
-      // I think Updatating should take user_id and hotel_id to alter the record
+      // I think Updatating should take userId and hotelId to alter the record
       const date = moment().format("MMM Do YY");
-      const { review_title, review, like, cleanliness, comfort, service, security, location } = req.body;
-      const ratings = await RatingAndReview.update({ review_title, date, review, like, cleanliness, comfort, service, security, location}, {where: {id}});
+      const { reviewTitle, review, like, cleanliness, comfort, service, security, location } = req.body;
+      const ratings = await RatingAndReview.update({ reviewTitle, date, review, like, cleanliness, comfort, service, security, location}, {where: {id}});
       return res.status(200).send({ message: 'Ratings updated', Record: ratings });
     }catch(err){
       return res.status(500).send({ message: 'Error occoured', Error: err });

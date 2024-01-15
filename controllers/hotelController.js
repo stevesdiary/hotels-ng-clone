@@ -105,23 +105,15 @@ const hotelController = {
           [Op.between]: [minPrice, maxPrice],
         };
       }
-      // if (date_in !== undefined && date_out !== undefined) {
-      //   whereConditions["$reservation.date_in$"] = {
-      //     [Op.notBetween]: [date_in, date_out],
-      //   };
-      //   whereConditions["$reservation.date_out$"] = {
-      //     [Op.notBetween]: [date_in, date_out],
-      //   };
-      // }
 
       //SEparate this endpoint to filter by 
-      if (dateIn !== undefined && dateOut !== undefined) {
-        whereConditions["$reservation.date_in$"] = {
+      // if (dateIn !== undefined && dateOut !== undefined) {
+      //   whereConditions["$reservation.date_in$"] = {
           
-          [Op.between]: [dateIn, dateOut],
+      //     [Op.between]: [dateIn, dateOut],
           
-        };
-      }
+      //   };
+      // }
       if (hotelType !== undefined) {
         whereConditions["$hotel.hotelType$"] = {
           [Op.like]: [hotelType],
