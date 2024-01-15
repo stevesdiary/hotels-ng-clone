@@ -149,13 +149,20 @@ const hotelController = {
           carHire,
           electricity24h,
         ];
-      
         facilityConditions.forEach((condition, index) => {
-          whereConditions[`$facilities.${condition}$`] = {
-            [Op.eq]: facilityValues[index],
-          };
+          if (facilityValues[index]) {
+            whereConditions[`$facilities.${condition}$`] = {
+              [Op.eq]: facilityValues[index],
+            };
+          }
         });
+        // facilityConditions.forEach((condition, index) => {
+        //   whereConditions[`$facilities.${condition}$`] = {
+        //     [Op.eq]: facilityValues[index],
+        //   };
+        // });
       }
+      
       const { count, rows: hotels } = await Hotel.findAndCountAll({
         // logging: console.log,
         distinct: true,
@@ -201,13 +208,12 @@ const hotelController = {
         ],
       });
 
-      if (count == 0) {
-        return res.status(404).send({
-          Message:
-            "No record found for this search, try checking the search parameters n\
-            You can search by Hotel name, price range, city, hotel facilities and date range.",
-        });
-      }
+      // if (count == 0) {
+      //   return res.status(404).send({
+      //     Message:
+      //       "No record found for this search, try checking the search parameters, you can search by the Hotel name, price range, city, hotel facilities.",
+      //   });
+      // }
       return res
         .status(200)
         .send({ Message: `Hotel records found.`, Count: count, Hotel: hotels });
@@ -374,7 +380,7 @@ const hotelController = {
         distinct: true,
         attributes: {
           exclude: ["createdAt", "updatedAt", "deletedAt"],
-          include: [Sequelize.literal('(SELECT COUNT(*) FROM "Reservations" WHERE "Reservations"."hotel_id" = "Hotel"."id")'),
+          include: [Sequelize.literal('(SELECT COUNT(*) FROM "Reservations" WHERE "Reservations"."hotelId" = "Hotel"."id")'),
             'reservationCount',
           ],
         },
