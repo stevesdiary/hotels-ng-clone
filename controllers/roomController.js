@@ -1,6 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
 const {Room, Hotel} = require('../models');
-// const moment = require('moment');
 const roomController = {
   createRoom: async (req, res) => {
     try{
@@ -18,7 +17,6 @@ const roomController = {
       }
 
       const hotelId = hotel.id;
-      // console.log(hotelId, deals, price, discount)
       const room = await Room.create({id, hotelId, category, capacity, deals, checkIn, checkOut, description, availability, discount, price, discountedPrice, condition, additionalRequest});
       console.log('Data created', room)
       return res.status(201).send({message: 'Room created successfully', room})
