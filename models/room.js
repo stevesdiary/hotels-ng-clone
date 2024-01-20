@@ -69,8 +69,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true
       },
       condition: {
-        type: DataTypes.UUIDV4,
+        type: DataTypes.STRING,
         allowNull: false,
+      },
+      additionalRequest: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
     },
     {
