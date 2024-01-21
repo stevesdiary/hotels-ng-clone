@@ -4,8 +4,6 @@ const verifyType = require('../middleware/verifyType');
 const userController = require('../controllers/usersController');
 const { authentication } = require('../middleware/authentication');
 
-// router.post('/user', userController.createUser);
-
 router.get('/alluser', authentication, verifyType(['admin']), userController.findAllUser);
 
 router.get('/user/:id', authentication, verifyType(['admin']), userController.findOne)
