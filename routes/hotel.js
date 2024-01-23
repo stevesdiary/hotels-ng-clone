@@ -11,7 +11,7 @@ router.get('/topdeals', hotelController.topDeals);
 
 router.get('/tophotels', hotelController.topHotelsByState);
 
-router.get('/hotelsbycities', hotelcontroller.hotelsByCity);
+router.get('/hotels-by-cities', hotelController.hotelsByCity);
 
 router.get('/topdestinations', hotelController.getTopDestinations);
 

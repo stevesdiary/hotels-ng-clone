@@ -67,7 +67,7 @@ app.use('/', roomRoute);
 app.use('/', facilityRoute);
 app.use('/', ratingsRoute);
 app.use('/', reservationRoute);
-app.get('/', (req, res) => {
+app.get('/test', (req, res) => {
    res.send("Description.")
 })
 
@@ -95,8 +95,7 @@ app.post('/upload', upload.single('image', { folder: "hotels-ng" },), async(req,
          }
          console.log('File deleted successfully');
       });
-      return res.status(200).send({message: "Upload Successful", result: result.secure_url});
-      
+      return res.status(200).send({message: "Upload Successful", result: result.secure_url});  
    }
    catch(err) {
       console.log(err)
@@ -104,7 +103,7 @@ app.post('/upload', upload.single('image', { folder: "hotels-ng" },), async(req,
 });
 
 app.listen(port, async() => {
-   console.log('App running on port: ' + port)
+   console.log(`App running on port ${port}`)
 })
 
 module.exports = app
