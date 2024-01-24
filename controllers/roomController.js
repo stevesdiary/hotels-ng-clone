@@ -3,15 +3,14 @@ const {Room, Hotel} = require('../models');
 const roomController = {
   createRoom: async (req, res) => {
     try{
-      const contactEmail = req.body.contactEmail;
+      const hotelEmail = req.body.hotelEmail;
       const id = uuidv4();
       console.log(id);
       const { category, capacity, checkIn, deals, checkOut, description, availability, discount, price, condition, additionalRequest } = req.body;
       const discountOff = Math.round(price * (deals / 100));
       const discountedPrice = price - discountOff;
-      const hotel = await Hotel.findOne({where: {contactEmail: contactEmail}});
+      const hotel = await Hotel.findOne({where: {contactEmail: hotelEmail}});
       console.log('here is the hotel', hotel, )
-      console.log(hotel.id)
       if(!hotel){
         return res.status(404).send({Message: 'Hotel not found so rooms cannot be created.'})
       }

@@ -238,7 +238,7 @@ const hotelController = {
           exclude: ["createdAt", "updatedAt", "deletedAt"],
           include: [
               [
-                  Sequelize.literal('(SELECT COUNT(*) FROM `Rooms` WHERE `Rooms`.`deals` = `Room`.`deals`)'),
+                  Sequelize.literal('(SELECT COUNT(*) FROM `Rooms` WHERE `Rooms`.`deals` = `Rooms`.`deals`)'),
                   'dealsCount',
               ],
           ],
@@ -280,7 +280,7 @@ const hotelController = {
             },
           },
         ],
-        group: ['Hotel.id'],
+        // group: ['Hotel.id'],
         order: [[Sequelize.literal('dealsCount'), 'DESC']],
         limit: 6,
       });
