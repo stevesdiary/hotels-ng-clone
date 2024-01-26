@@ -280,7 +280,6 @@ const hotelController = {
             },
           },
         ],
-        // group: ['Hotel.id'],
         order: [[Sequelize.literal('dealsCount'), 'DESC']],
         limit: 6,
       });
@@ -297,22 +296,22 @@ const hotelController = {
 //not yet tested nor finalised
   getTopDestinations: async (req, res) => {
     try{
-      const state = req.query.state;
+      const city = req.query.city;
       const whereConditions = {};
-      if (state !== undefined) {
+      if (city !== undefined) {
         whereConditions["$hotels.city$"] = {
           [Op.eq]: [state],
         };
       }
       const { count, rows: hotels } = await Hotel.findAndCountAll({
-        // logging: console.log,
+        logging: console.log,
         distinct: true,
         attributes: {
           exclude: ["createdAt", "updatedAt", "deletedAt"],
           include: [
               [
-                  Sequelize.literal('(SELECT COUNT(*) FROM `Rooms` WHERE `Rooms`.`deals` = `Room`.`deals`)'),
-                  'dealsCount',
+                  Sequelize.literal('(SELECT COUNT(*) FROM `Reservations` WHERE `Reservations`.`id` = `Reservations`.`id`)'),
+                  'destinationsCount',
               ],
           ],
         },
@@ -353,8 +352,7 @@ const hotelController = {
             },
           },
         ],
-        group: ['Hotel.id'],
-        order: [[Sequelize.literal('dealsCount'), 'DESC']],
+        order: [[Sequelize.literal('destinationsCount'), 'DESC']],
         limit: 6,
       });
 
@@ -376,8 +374,8 @@ const hotelController = {
           exclude: ["createdAt", "updatedAt", "deletedAt"],
           include: [
               [
-                  Sequelize.literal('(SELECT COUNT(*) FROM `Rooms` WHERE `Rooms`.`deals` = `Room`.`deals`)'),
-                  'dealsCount',
+                  Sequelize.literal('(SELECT COUNT(*) FROM `Hotels` WHERE `Hotels`.`city` = `Hotels`.`city`)'),
+                  'citiesCount',
               ],
           ],
         },
@@ -418,8 +416,8 @@ const hotelController = {
             },
           },
         ],
-        group: ['Hotel.id'],
-        order: [[Sequelize.literal('dealsCount'), 'DESC']],
+        // group: ['Hotel.id'],
+        order: [[Sequelize.literal('citiesCount'), 'DESC']],
         limit: 6,
       });
 
