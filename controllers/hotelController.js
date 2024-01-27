@@ -297,10 +297,11 @@ const hotelController = {
   getTopDestinations: async (req, res) => {
     try{
       const city = req.query.city;
+      const state = req.query.state;
       const whereConditions = {};
-      if (city !== undefined) {
-        whereConditions["$hotels.city$"] = {
-          [Op.eq]: [state],
+      if (city !== undefined || state !== undefined) {
+        whereConditions["$hotels.city$", "$hotels.state"] = {
+          [Op.or]: [state, city],
         };
       }
       const { count, rows: hotels } = await Hotel.findAndCountAll({
