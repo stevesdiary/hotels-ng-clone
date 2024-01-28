@@ -50,7 +50,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           isPhoneNumber(value) {
-            // Implement your custom phone number validation logic
             const phoneRegex = /^\d{13}$/; // Example: Allow only 10-digit numbers
             if (!phoneRegex.test(value)) {
               throw new Error('Invalid phone number format, include the country code');
