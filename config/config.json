@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "stephenoyeyemi",
-    "password": "12345",
+    "username": "agrpusr",
+    "password": "fgoPE4YFYaWBr6Cw8MNiPt7no",
     "database": "hotels",
-    "host": "127.0.0.1",
+    "host": "staging-cslt-instance-1.cx3avcx119tr.eu-central-1.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "test": {
