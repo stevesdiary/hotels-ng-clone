@@ -85,8 +85,7 @@ app.get('/test', (req, res) => {
 app.post('/upload', upload.single('image', { folder: "hotels-ng" },), async(req, res) => {
    try {
       let imagePath = "./uploads/" + req.file.filename;
-      
-      // console.log('Upload status', imagePath)
+
       const result = await cloudinary.uploader.upload(imagePath, options);
       console.log("Upload successful! Here's the image url: ", result.secureUrl)
       await fs.unlink("./uploads/" + req.file.filename, (err) => {
