@@ -14,10 +14,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
+    "username": "agrpusr",
+    "password": "fgoPE4YFYaWBr6Cw8MNiPt7no",
+    "database": "hotels",
+    "host": "staging-cslt-instance-1.cx3avcx119tr.eu-central-1.rds.amazonaws.com",
     "dialect": "mysql"
   }
 }
