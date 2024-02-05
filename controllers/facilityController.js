@@ -134,9 +134,9 @@ const facilityController = {
       if (facility == 1) {
         return res.status(500).send({message: `Facility record with id ${id} has been deleted successfully`});
       }
-      if(facility == 0){
-        return res.send({message: `Facility record with id ${id} does not exist or is deleted in the database`});
-      }
+      // if(facility == 0){
+      //   return res.send({message: `Facility record with id ${id} does not exist or is deleted in the database`});
+      // }
     }
     catch(err){
       return res.status(500).send({message: 'Error occoured!', Error: err});

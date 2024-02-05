@@ -38,15 +38,15 @@ exports.findOne =  async (req, res) => {
 exports.deleteUser = async (req, res ) => {
   try{
     const id = req.params.id;
-    // console.log(id)
+    console.log("IDDDD", id)
     const user = await User.destroy({where: {id}})
     // console.log(user)
     if (user == 1 ){
       return res.send({message: `User with id ${id} has been deleted successfully!`})
     }
-    if(user == 0){
-      return res.send({message: `User ${id} does not exist or is deleted in the database`})
-    }
+    // if(user == 0){
+    //   return res.send({message: `User ${id} does not exist or is deleted in the database`})
+    // }
   }catch(err){
     return res.status(500).send({message: 'Error occoured', err})
   }
