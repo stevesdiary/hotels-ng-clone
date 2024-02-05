@@ -4,12 +4,12 @@ const verifyType = require('../middleware/verifyType');
 const userController = require('../controllers/usersController');
 const { authentication } = require('../middleware/authentication');
 
-router.get('/alluser', authentication, verifyType(['admin']), userController.findAllUser);
+router.get('/alluser', userController.findAllUser); //authentication, verifyType(['admin']),
 
-router.get('/user/:id', authentication, verifyType(['admin']), userController.findOne)
+router.get('/user/:id', userController.findOne); // authentication, verifyType(['admin']),
 
-router.put('/updateuser/:id', authentication, verifyType(['admin']), userController.updateUser);
+router.put('/updateuser/:id', userController.updateUser); //authentication, verifyType(['admin'])
 
-router.delete('/delete/:id', authentication, verifyType(['admin']), userController.deleteUser);
+router.delete('/deleteuser/:id', userController.deleteUser);
 
 module.exports = router;
