@@ -3,7 +3,7 @@ const router = express.Router();
 const verifyType = require('../middleware/verifyType');
 const hotelController = require('../controllers/hotelController');
 
-router.post('/createhotel', verifyType(['admin']), hotelController.createHotel);
+router.post('/createhotel', hotelController.createHotel);
 
 router.get('/findall', hotelController.findAllHotel);
 

@@ -16,6 +16,7 @@ router.post("/forgot", async (req, res, next) => {
       email,
     };
     const signedToken = jwt.sign(payload, process.env.JWT_SECRET, options);
+    const url = process.env.PUBLIC_URL
     console.log("Signed token at forgot password: ", signedToken);
     console.log("UUID at forgot password: ", token);
     const transporter = nodemailer.createTransport({
@@ -25,7 +26,7 @@ router.post("/forgot", async (req, res, next) => {
         pass: process.env.EMAIL_PASSWORD,
       },
     });
-    const link = `http://localhost:5001/resetPassword/${signedToken}`;
+    const link = `${url}/resetPassword/${signedToken}`;
     console.log(link);
     // res.send('Password reset link has ben sent to ' + email + ' the link will expire in 10 minutes');
     const mailOptions = {

@@ -4,14 +4,14 @@ const router = express.Router();
 
 const facilityController = require('../controllers/facilityController');
 
-router.post('/createfacility', verifyType(['admin']), facilityController.createFacility);
+router.post('/createfacility', facilityController.createFacility); // verifyType(['admin']),
 
-router.get('/findfacility/:hotel_id', verifyType(['admin', 'regular', 'guest']), facilityController.getFacility);
+router.get('/findfacility/:hotel_id', facilityController.getFacility); //verifyType(['admin', 'regular', 'guest']),
 
-router.get('/findfacilities', verifyType(['admin', 'regular', 'guest']), facilityController.getAllFacilities);
+router.get('/findfacilities', facilityController.getAllFacilities);
 
-router.put('/facility/:id', verifyType(['admin']), facilityController.updateFacility);
+router.put('/facility/:id', facilityController.updateFacility);
 
-router.delete('/facility/:id', verifyType(['admin']), facilityController.deleteFacility);
+router.delete('/facility/:id', facilityController.deleteFacility);
 
 module.exports = router;
