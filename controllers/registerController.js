@@ -8,7 +8,6 @@ const registerController = {
     try{
       const { firstName, lastName, phoneNumber, gender, email, password, confirmPassword, type } = req.body;
       const id = uuidv4();
-      console.log(email, "EMAIL", firstName);
       const userExists = await User.findOne({ where: { email } });
 
       if (userExists) {
@@ -21,12 +20,30 @@ const registerController = {
         const hashedPassword = await bcrypt.hash(password, saltRounds);
       
       const userRecord = await User.create({ id, firstName, lastName, phoneNumber,gender, email, password: hashedPassword, type });
-      // console.log("User created", user_record);
-      return res.status(201).send({ Message: `User record for ${firstName} has been created successfully`, userRecord });
+      if (userRecord) {
+        const sanitizedUser = await User.findByPk(userRecord.id, {
+          attributes: { exclude: ['password'] },
+        }); 
+        return res.status(201).json({ Message: `User ${firstName} created successfully`, User: sanitizedUser });
+      }
+      
+
+      // return res.status(201).send({ 
+      //   Message: `User record for ${firstName} has been created successfully`, 
+      //   RESULT: (
+      //     userRecord.id, 
+      //     userRecord.firstName, 
+      //     userRecord.lastName, 
+      //     userRecord.gender, 
+      //     userRecord.phoneNumber, 
+      //     userRecord.email, 
+      //     userRecord.type
+      //   )
+      // });
       }
     }catch(err) {
       console.log(err)
-      return res.status(500).send({message: "An error occoured!", err});
+      return res.status(500).send({message: "An error occoured!", Error: ( err.type, err.message ) });
     }
   }
 }
