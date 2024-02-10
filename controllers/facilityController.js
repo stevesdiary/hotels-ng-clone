@@ -6,38 +6,38 @@ const facilityController = {
     try{
       const id = uuidv4();
       const { 
-        hotel_id,
+        hotelId,
         restaurant,
-        bar_launge,
+        barLaunge,
         security,
-        wifi_internet,
-        swimming_pool,
+        wifiInternet,
+        swimmingPool,
         dstv,
         gym,
         cctv,
-        car_hire,
-        room_service,
-        front_desk_24h,
-        electricity_24h,
-        car_park 
+        carHire,
+        roomService,
+        frontDesk24h,
+        electricity24h,
+        carPark 
       } = req.body;
       console.log(req.body);
       const facility = await Facility.create({
         id,
-        hotel_id,
+        hotelId,
         restaurant,
-        bar_launge,
+        barLaunge,
         security,
-        wifi_internet,
-        swimming_pool,
+        wifiInternet,
+        swimmingPool,
         dstv,
         gym,
         cctv,
-        car_hire,
-        room_service,
-        front_desk_24h,
-        electricity_24h,
-        car_park,
+        carHire,
+        roomService,
+        frontDesk24h,
+        electricity24h,
+        carPark
       });
 
       if (facility == 1) {
@@ -55,33 +55,33 @@ const facilityController = {
       const id = req.params.id;
       const {
         restaurant,
-        bar_launge,
+        barLaunge,
         security,
-        wifi_internet,
-        swimming_pool,
+        wifiInternet,
+        swimmingPool,
         dstv,
         gym,
         cctv,
-        car_hire,
-        room_service,
-        front_desk_24h,
-        electricity_24h,
-        car_park 
+        carHire,
+        roomService,
+        frontDesk24h,
+        electricity24h,
+        carPark  
       } = req.body;
       const facility = await Facility.update({
         restaurant,
-        bar_launge,
+        barLaunge,
         security,
-        wifi_internet,
-        swimming_pool,
+        wifiInternet,
+        swimmingPool,
         dstv,
         gym,
         cctv,
-        car_hire,
-        room_service,
-        front_desk_24h,
-        electricity_24h,
-        car_park,
+        carHire,
+        roomService,
+        frontDesk24h,
+        electricity24h,
+        carPark, 
       }, {where: {id}});
       if (facility == 1) {
         console.log('Facilities updated successfully.', facility);
@@ -95,21 +95,22 @@ const facilityController = {
   
   getFacility: async (req, res) => {
     try{
-      const hotel_id = req.params.hotel_id;
+      const hotelId = req.params.hotelId;
+      console.log(hotelId)
       const facility = await Facility.findOne({
-        where: {hotel_id},
+        where: {hotelId},
         attributes: {
           exclude: [ 'createdAt', 'updatedAt', 'deletedAt']
         },
       });
       if (facility.length == 0 ) {
         console.log(facility.length, 'facility length')
-        return res.status(404).send({message: 'Facility record not found'})
+        return res.status(404).send({ Message: 'Facility record not found' })
       }
-      return res.status(200).send({ message: 'Record found', Record: facility });
+      return res.status(200).send({ Message: 'Record found', Record: facility });
     }
     catch(err){
-      return res.status(500).send({message: 'Error occoured!', Error: err});
+      return res.status(500).send({ Message: 'Error occoured!', Error: err.message });
     }
   },
 

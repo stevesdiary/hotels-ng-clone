@@ -44,9 +44,9 @@ exports.deleteUser = async (req, res ) => {
     if (user == 1 ){
       return res.send({message: `User with id ${id} has been deleted successfully!`})
     }
-    // if(user == 0){
-    //   return res.send({message: `User ${id} does not exist or is deleted in the database`})
-    // }
+    if(user == 0){
+      return res.send({message: `User ${id} does not exist or is deleted in the database`})
+    }
   }catch(err){
     return res.status(500).send({message: 'Error occoured', err})
   }

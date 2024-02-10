@@ -297,11 +297,12 @@ const hotelController = {
   getTopDestinations: async (req, res) => {
     try{
       const city = req.query.city;
-      const state = req.query.state;
+      // const state = req.params.state;
+      console.log("CITY", city)
       const whereConditions = {};
-      if (city !== undefined || state !== undefined) {
-        whereConditions["$hotels.city$", "$hotels.state"] = {
-          [Op.or]: [state, city],
+      if (city !== undefined) {
+        whereConditions["$hotels.city$"] = {
+          [Op.eq]: [city],
         };
       }
       const { count, rows: hotels } = await Hotel.findAndCountAll({
@@ -309,12 +310,12 @@ const hotelController = {
         distinct: true,
         attributes: {
           exclude: ["createdAt", "updatedAt", "deletedAt"],
-          include: [
-              [
-                  Sequelize.literal('(SELECT COUNT(*) FROM `Reservations` WHERE `Reservations`.`id` = `Reservations`.`id`)'),
-                  'destinationsCount',
-              ],
-          ],
+          // include: [
+          //     [
+          //         Sequelize.literal('(SELECT COUNT(*) FROM `Reservations` WHERE `Reservations`.`id` = `Reservations`.`id`)'),
+          //         'destinationsCount',
+          //     ],
+          // ],
         },
         where: whereConditions,
         include: [
@@ -353,7 +354,7 @@ const hotelController = {
             },
           },
         ],
-        order: [[Sequelize.literal('destinationsCount'), 'DESC']],
+        // order: [[Sequelize.literal('destinationsCount'), 'DESC']],
         limit: 6,
       });
 
