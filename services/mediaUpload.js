@@ -15,7 +15,6 @@ const user_route = require("./routes/user");
 const path = require("path");
 const multer = require("multer");
 const bodyParser = require("body-parser");
-const port = process.env.LOCAL_PORT || 3000;
 require("dotenv").config();
 // const routes = require("./routes");
 cloudinary.config({
