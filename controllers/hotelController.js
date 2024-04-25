@@ -106,7 +106,7 @@ const hotelController = {
         };
       }
 
-      //SEparate this endpoint to filter by 
+      //Separate this endpoint to filter by 
       // if (dateIn !== undefined && dateOut !== undefined) {
       //   whereConditions["$reservation.date_in$"] = {
           
