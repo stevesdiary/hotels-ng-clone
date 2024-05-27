@@ -79,7 +79,8 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       tableName: "RatingsAndReviews",
       modelName: "RatingAndReview",
-      paranoid: false,
+      paranoid: true,
+      timestamps: true,
     }
   );
   return RatingAndReview;
