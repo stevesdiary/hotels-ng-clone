@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: "First name cannot be empty.",
+            msg: "First name is required.",
           },
         },
       },
@@ -37,8 +37,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Last name cannot be empty.",
+            msg: "Last name is required.",
           },
+          // min: string(3) 
         },
       },
       gender: {
@@ -50,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           isPhoneNumber(value) {
-            const phoneRegex = /^\d{13}$/; // Example: Allow only 10-digit numbers
+            const phoneRegex = /^(?:\+?234|0)\d{10}$/; // Example: Allow only 10-digit numbers
             if (!phoneRegex.test(value)) {
               throw new Error('Invalid phone number format, include the country code');
             }
@@ -95,7 +96,8 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       tableName: "Users",
       modelName: "User",
-      paranoid: false,
+      paranoid: true,
+      timestamps: true,
     }
   );
   return User;
