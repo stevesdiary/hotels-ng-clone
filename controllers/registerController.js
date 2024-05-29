@@ -19,27 +19,13 @@ const registerController = {
       if(password == confirmPassword) {
         const hashedPassword = await bcrypt.hash(password, saltRounds);
       
-      const userRecord = await User.create({ id, firstName, lastName, phoneNumber,gender, email, password: hashedPassword, type });
-      if (userRecord) {
-        const sanitizedUser = await User.findByPk(userRecord.id, {
-          attributes: { exclude: ['password'] },
-        }); 
-        return res.status(201).json({ Message: `User ${firstName} created successfully`, User: sanitizedUser });
-      }
-      
-
-      // return res.status(201).send({ 
-      //   Message: `User record for ${firstName} has been created successfully`, 
-      //   RESULT: (
-      //     userRecord.id, 
-      //     userRecord.firstName, 
-      //     userRecord.lastName, 
-      //     userRecord.gender, 
-      //     userRecord.phoneNumber, 
-      //     userRecord.email, 
-      //     userRecord.type
-      //   )
-      // });
+        const userRecord = await User.create({ id, firstName, lastName, phoneNumber,gender, email, password: hashedPassword, type });
+        if (userRecord) {
+          const sanitizedUser = await User.findByPk(userRecord.id, {
+            attributes: { exclude: ['password'] },
+          }); 
+          return res.status(201).json({ Message: `User ${firstName} created successfully`, User: sanitizedUser });
+        }
       }
     }catch(err) {
       console.log(err)
