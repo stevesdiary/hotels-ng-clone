@@ -1,7 +1,6 @@
 const express = require("express");
 const { User } = require("../models");
 const router = express.Router();
-const verifyType = require('../middleware/verifyType');
 const saltRounds = 11;
 const { v4: uuidv4 } = require("uuid");
 const nodemailer = require("nodemailer");
