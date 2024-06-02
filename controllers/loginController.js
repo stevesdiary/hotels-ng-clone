@@ -1,15 +1,13 @@
-const express = require("express");
-// const { admin } = require('../models/admin');
 const { User } = require("../models");
 const jwt = require("jsonwebtoken");
-const router = express.Router();
-const cookie = require('cookie');
-const bcrypt = require("bcrypt");
-const { authentication } = require("../middleware/authentication");
-
+const bcrypt = require('bcrypt');
+const { v4: uuidv4 } = require('uuid');
+const tokenExpiry = process.env.TOKEN_EXPIRY || '5hours';
 const loginController = {
   login: async (req, res) => {
     try{
+      const sessions = {}
+      const session_id = uuidv4();
       const {email, password } = req.body;
       const userData = await User.findOne({ where: { email: email } });
       if (!userData) {
@@ -25,32 +23,38 @@ const loginController = {
       const first_name = user.first_name;
       const last_name = user.last_name;
       const type = user.type;
-      const accessToken = jwt.sign(
-        {
-          UserInfo: {
-            id: id,
-            email: userData.email,
-            type: user.type,
-          },
-        },
-        process.env.JWT_SECRET,
-        {exiresIn: process.env.LOGIN_EXPIRE},
-        // {exp: Math.floor(Date.now() / 1000) + 60 * 60 * 10},
-      );
-      console.log(`${email} logged in as ${type} user.`);
-
+      const UserInfo = {
+        id: id,
+        email: userData.email,
+        type: user.type
+      }
+      const accessToken = jwt.sign(UserInfo, process.env.JWT_SECRET, {expiresIn: tokenExpiry});
+      console.log(`${email} logged in as ${type}.`);
+      sessions[session_id] = { email, user_id: id }
+      // let userSession = sessions[session_id]
+      res.set('Set-Cookie', `session=${session_id}`);
       return res.status(200).json({
         statusCode: 200,
-        id: user.id,
-        first_name: first_name,
-        last_name: last_name,
-        type: type,
+        id,
+        email: sessions.email,
+        first_name,
+        last_name,
+        type,
         token: accessToken,
       });
 
     }
     catch(err){
+      console.log(err);
       return res.status(500).send({Message: `User unable to login`, Error: err})
+    }
+  },
+
+  logout: async (req, res) => {
+    try {
+      
+    } catch (error) {
+      
     }
   }
   
