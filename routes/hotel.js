@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const verifyType = require('../middleware/verifyType');
-const authentication = require("../middleware/authentication");
+const verifyUserType = require('../middleware/verifyUserType');
+const {authentication} = require("../middleware/authentication");
 const hotelController = require('../controllers/hotelController');
 
-router.post('/createhotel', hotelController.createHotel);
+router.post('/createhotel', authentication, verifyUserType('admin'), hotelController.createHotel);
 
 router.get('/findall', hotelController.findAllHotel);
 
@@ -16,13 +16,13 @@ router.get('/hotels-by-cities', hotelController.hotelsByCity);
 
 router.get('/topdestinations', hotelController.getTopDestinations);
 
-router.get('/findone/:id', hotelController.findOneHotel);
+router.get('/findone/:id', authentication, verifyUserType('admin', 'user'), hotelController.findOneHotel);
 
 router.get('/bydate', hotelController.findHotelByDate);
 
-router.put('/update/:id', verifyType, hotelController.updateHotel);
+router.put('/update/:id', verifyUserType('admin'), hotelController.updateHotel);
 
-router.delete('/delete/:id', verifyType(['admin']), hotelController.deleteHotel);
+router.delete('/delete/:id', verifyUserType('admin'), hotelController.deleteHotel);
 
 
 

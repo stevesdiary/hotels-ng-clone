@@ -1,8 +1,9 @@
 // const express = require('express');
-const verifyType = (allowedType) => {
+const verifyUserType = (...allowedType) => {
   return (req, res, next) => {
     try {
-      if (allowedType.includes(req.type)) {
+      const userType = req.type;
+      if (allowedType.includes(userType)) {
         next();
       } else {
         res.status(401).send({
@@ -16,4 +17,4 @@ const verifyType = (allowedType) => {
   };
 };
 
-module.exports = verifyType;
+module.exports = verifyUserType;
