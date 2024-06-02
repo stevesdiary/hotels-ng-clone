@@ -7,7 +7,7 @@ const {
   Reservation,
   Sequelize,
 } = require("../models");
-// const { logging } = require("googleapis/build/src/apis/logging");
+
 const Op = Sequelize.Op;
 
 const hotelController = {
@@ -156,15 +156,10 @@ const hotelController = {
             };
           }
         });
-        // facilityConditions.forEach((condition, index) => {
-        //   whereConditions[`$facilities.${condition}$`] = {
-        //     [Op.eq]: facilityValues[index],
-        //   };
-        // });
       }
       
       const { count, rows: hotels } = await Hotel.findAndCountAll({
-        // logging: console.log,
+        // logging: true,
         distinct: true,
         attributes: {
           exclude: ["createdAt", "updatedAt", "deletedAt"],
@@ -298,7 +293,7 @@ const hotelController = {
     try{
       const city = req.query.city;
       // const state = req.params.state;
-      console.log("CITY", city)
+      // console.log("CITY", city)
       const whereConditions = {};
       if (city !== undefined) {
         whereConditions["$hotels.city$"] = {
@@ -680,12 +675,12 @@ const hotelController = {
     try {
       const id = req.params.id;
       const hotel = await Hotel.destroy({ where: { id } });
-      if (hotel == 1) {
+      if (hotel > 1) {
         return res.send({
           message: `User with id ${id} has been deleted successfully!`,
         });
       }
-      if (hotel == 0) {
+      if (hotel < 1 ) {
         return res.send({
           message: `User ${id} does not exist or is deleted in the database`,
         });
