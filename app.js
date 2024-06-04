@@ -2,14 +2,11 @@
  * @param {string}
  */
 const  express = require ("express");
-const  { Sequelize } = require("sequelize");
 const cloudinary = require("cloudinary").v2;
-const mysql = require('mysql2');
 const env = require("dotenv").config();
 const fs = require('fs/promises');
 const cors = require ("cors");
 const helmet = require('helmet');
-const db = require('./config/dbConfig');
 const app = express();
 const forgotPasswordRoute = require('./routes/forgotPassword')
 const registerRoute = require('./routes/register');
@@ -25,7 +22,7 @@ const path = require("path");
 const multer = require("multer");
 const fileUpload = require('express-fileupload');
 const bodyParser = require('body-parser');
-const port = process.env.PORT || 3306 ;
+const port = process.env.LOCAL_PORT || 3306 ;
 require('dotenv').config();
 // const routes = require("./routes");
 cloudinary.config({
@@ -102,7 +99,7 @@ app.post('/upload', upload.single('image', { folder: "hotels-ng" },), async(req,
 });
 
 app.listen(port, async() => {
-   console.log(`App running on port ${port}`)
+   console.log(`App running on port ${port} ✅`)
 })
 
 module.exports = app
