@@ -46,7 +46,7 @@ const loginController = {
     }
     catch(err){
       console.log(err);
-      return res.status(500).send({Message: `User unable to login`, Error: err})
+      return res.status(500).send({Message: `User ${email}unable to login`, Error: err})
     }
   },
 

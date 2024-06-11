@@ -1,12 +1,12 @@
 const express = require('express');
-const verifyType = require('../middleware/verifyType');
+const verifyUserType = require('../middleware/verifyUserType');
 const router = express.Router();
 
 const facilityController = require('../controllers/facilityController');
 
-router.post('/createfacility', facilityController.createFacility); // verifyType(['admin']),
+router.post('/createfacility', facilityController.createFacility); // verifyUserType(['admin']),
 
-router.get('/findfacility/:hotel_id', facilityController.getFacility); //verifyType(['admin', 'regular', 'guest']),
+router.get('/findfacility/:hotel_id', facilityController.getFacility); //verifyUserType(['admin', 'regular', 'guest']),
 
 router.get('/findfacilities', facilityController.getAllFacilities);
 
