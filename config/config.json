@@ -1,9 +1,10 @@
+
 {
   "development": {
-    "username": "agrpusr",
-    "password": "fgoPE4YFYaWBr6Cw8MNiPt7no",
-    "database": "hotels",
-    "host": "staging-cslt-instance-1.cx3avcx119tr.eu-central-1.rds.amazonaws.com",
+    "username": process.env.DB_USER,
+    "password": process.env.PASSWORD,
+    "database": process.env.DAB_NAME,
+    "host": process.env.DB_HOST,
     "dialect": "mysql"
   },
   "test": {
@@ -14,10 +15,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "agrpusr",
-    "password": "fgoPE4YFYaWBr6Cw8MNiPt7no",
-    "database": "hotels",
-    "host": "staging-cslt-instance-1.cx3avcx119tr.eu-central-1.rds.amazonaws.com",
+    "username": process.env.DB_USER,
+    "password": process.env.PASSWORD,
+    "database": process.env.DAB_NAME,
+    "host": process.env.DB_HOST,
     "dialect": "mysql"
   }
 }
