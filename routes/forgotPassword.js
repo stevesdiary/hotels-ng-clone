@@ -1,5 +1,5 @@
 const express = require("express");
-const { User } = require("../models");
+// const { User } = require("../models");
 const router = express.Router();
 const saltRounds = 11;
 const { v4: uuidv4 } = require("uuid");
@@ -27,7 +27,7 @@ router.post("/forgot", async (req, res, next) => {
     });
     const link = `${url}/resetPassword/${signedToken}`;
     console.log(link);
-    // res.send('Password reset link has ben sent to ' + email + ' the link will expire in 10 minutes');
+
     const mailOptions = {
       from: process.env.SENDER_EMAIL,
       to: email,
