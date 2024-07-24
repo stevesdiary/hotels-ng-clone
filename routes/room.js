@@ -1,17 +1,18 @@
 const express = require('express');
-
+const { authentication } = require('../middleware/authentication');
+const verifyUserType = require('../middleware/verifyUserType');
 const router = express.Router();
 
 const roomController = require('../controllers/roomController');
 
-router.post('/room', roomController.createRoom);
+router.post('/room', authentication, verifyUserType('admin'), roomController.createRoom);
 
-router.get('/room/:id', roomController.getRoom);
+router.get('/room/:id', authentication, verifyUserType(['admin']), roomController.getRoom);
 
-router.get('/rooms', roomController.getAllRooms);
+router.get('/rooms', authentication, verifyUserType('admin'), roomController.getAllRooms);
 
-router.put('/updateroom/:id', roomController.updateRoom);
+router.put('/updateroom/:id', authentication, verifyUserType('admin'), roomController.updateRoom);
 
-router.delete('/deleteroom/:id', roomController.deleteRoom);
+router.delete('/deleteroom/:id', authentication, verifyUserType('admin'), roomController.deleteRoom);
 
 module.exports = router;
