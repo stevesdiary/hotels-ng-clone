@@ -28,9 +28,7 @@ const loginController = {
         type: user.type
       }
       const accessToken = jwt.sign(UserInfo, process.env.JWT_SECRET, {expiresIn: tokenExpiry});
-      console.log(`${email} logged in as ${type}.`);
       sessions[session_id] = { email, user_id: id }
-      // let userSession = sessions[session_id]
       res.set('Set-Cookie', `session=${session_id}`);
       return res.status(200).json({
         statusCode: 200,
