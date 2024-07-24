@@ -1,3 +1,5 @@
 node_modules
 .env
 uploads
+config.json
+/config/config.json
