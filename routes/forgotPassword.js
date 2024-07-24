@@ -1,5 +1,4 @@
 const express = require("express");
-// const { User } = require("../models");
 const router = express.Router();
 const saltRounds = 11;
 const { v4: uuidv4 } = require("uuid");
