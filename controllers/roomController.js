@@ -5,18 +5,19 @@ const roomController = {
     try{
       const hotelEmail = req.body.hotelEmail;
       const id = uuidv4();
-      console.log(id);
+      // console.log(id);
       const { category, capacity, checkIn, deals, checkOut, description, availability, discount, price, condition, additionalRequest } = req.body;
       const discountOff = Math.round(price * (deals / 100));
       const discountedPrice = price - discountOff;
       const hotel = await Hotel.findOne({where: {contactEmail: hotelEmail}});
-      console.log('here is the hotel', hotel, )
+      // console.log('here is the hotel', hotel, )
       if(!hotel){
         return res.status(404).send({Message: 'Hotel not found so rooms cannot be created.'})
       }
 
       const hotelId = hotel.id;
       const room = await Room.create({id, hotelId, category, capacity, deals, checkIn, checkOut, description, availability, discount, price, discountedPrice, condition, additionalRequest});
+
       console.log('Room created', room)
       return res.status(201).send({message: 'Room created successfully', data: room})
     }
@@ -64,9 +65,9 @@ const roomController = {
   deleteRoom: async (req, res) => {
     try{
       const id = req.params.id;
-      const deleteRoom = await Room.destroy({where: {id}});
+      const deleteRoom = await Room.destroy({ where: {id} });
       if (deleteRoom == 1) {
-        return res.status(500).send({message: `Room record with id ${id} has been deleted successfully`});
+        return res.status(500).send({ message: `Room record with id ${id} has been deleted successfully` });
       }
       if(deleteRoom == 0){
         return res.send({message: `Room with id ${id} does not exist or is deleted in the database`});

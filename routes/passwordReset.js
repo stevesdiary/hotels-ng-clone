@@ -1,9 +1,14 @@
-const express = require('express');
+// const express = require("express");
 
-const router = express.Router();
-const verifyUserType = require('../middleware/verifyUserType').default;
-const passwordResetController = require('../controllers/passwordResetController');
-//, verifyUserType(['premium', 'regular', 'guest', 'admin'])
-router.put('/:token', passwordResetController.resetPassword);
+// const router = express.Router();
+// const { verifyUserType }= require("../middleware/verifyUserType");
+// const authentication = require("../middleware/authentication");
+// const passwordResetController = require("../controllers/passwordResetController");
+// router.put(
+//   "/:token",
+//   authentication,
+//   verifyUserType("admin", "user"),
+//   passwordResetController.resetPassword
+// );
 
-module.exports = router;
+// module.exports = router;

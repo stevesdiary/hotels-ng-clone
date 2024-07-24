@@ -8,8 +8,14 @@ const registerController = {
     try{
       const { firstName, lastName, phoneNumber, gender, email, password, confirmPassword, type } = req.body;
       const id = uuidv4();
+      const isStrongPassword = (password) => {
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!passwordRegex.test(password)) {
+          console.error('Validation failed!');
+          throw new Error('Password must be at least 8 characters long and include at least one lowercase letter, one uppercase letter, one numeric digit, and one special character.');
+        }
+      };
       const userExists = await User.findOne({ where: { email } });
-
       if (userExists) {
         return res.status(409).json({ Message: `User ${firstName} already exists, you can login with your password.` });
       }

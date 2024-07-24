@@ -1,15 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const verifyUserType = require('../middleware/verifyUserType');
+const verifyType = require('../middleware/verifyUserType');
 const userController = require('../controllers/usersController');
 const { authentication } = require('../middleware/authentication');
+const authorise = require('../middleware/verifyUserType');
 
-router.get('/alluser', userController.findAllUser); //authentication, verifyUserType(['admin']),
+router.get('/alluser', authentication, authorise('admin', 'user'), userController.findAllUser);
 
-router.get('/user/:id', userController.findOne); // authentication, verifyUserType(['admin']),
+router.get('/user/:id', authentication, authorise('admin', 'user'), userController.findOne);
 
-router.put('/updateuser/:id', userController.updateUser); //authentication, verifyUserType(['admin'])
+router.put('/updateuser/:id', authentication, authorise('admin'), userController.updateUser);
 
-router.delete('/deleteuser/:id', userController.deleteUser);
+router.delete('/deleteuser/:id', authentication, authorise('admin'), userController.deleteUser);
 
 module.exports = router;

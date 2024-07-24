@@ -1,4 +1,3 @@
-// const { UUID, UUIDV4 } = require('sequelize');
 const { v4: uuidv4 } = require("uuid");
 const { User } = require('../models');
 const user = require("../models/user");
@@ -11,7 +10,6 @@ exports.findAllUser = async (req, res) => {
         exclude: ['password', 'createdAt', 'updatedAt', 'deletedAt']
       }
     });
-    // console.log('Records found', users)
     return res.status(200).send({message: 'Records found', users})
   }catch(err){
     console.log('An error occoured!', err);
@@ -27,7 +25,6 @@ exports.findOne =  async (req, res) => {
       attributes: {
         exclude: ['password', 'createdAt', 'updatedAt', 'deletedAt']
       }});
-    console.log('User found', user);
     return res.status(200).send({message: 'User found', user });
   }catch(err){
     console.log('Error occoured', err)

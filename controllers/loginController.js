@@ -14,7 +14,6 @@ const loginController = {
         return res.status(404).send({ Message: "Email is not correct or not found!" });
       }
       const passwordMatch = await bcrypt.compare(password, userData.password);
-      // console.log(userData.password, passwordMatch, password);
       if (!passwordMatch) {
         return res.status(401).send({ Message: "Password is not correct, please provide the correct password." });
       } 
@@ -29,9 +28,7 @@ const loginController = {
         type: user.type
       }
       const accessToken = jwt.sign(UserInfo, process.env.JWT_SECRET, {expiresIn: tokenExpiry});
-      console.log(`${email} logged in as ${type}.`);
       sessions[session_id] = { email, user_id: id }
-      // let userSession = sessions[session_id]
       res.set('Set-Cookie', `session=${session_id}`);
       return res.status(200).json({
         statusCode: 200,
@@ -52,9 +49,14 @@ const loginController = {
 
   logout: async (req, res) => {
     try {
-      
+      const session_id = req.headers.cookie;
+      if (session_id) {
+        await redisClient.del(session_id);
+        res.clearCookie('session');
+      }
+      return res.status(200).send('Bye 👋, you have successfully logged out')
     } catch (error) {
-      
+      return res.status(500).send({ message: 'An error occoured', error })
     }
   }
   
