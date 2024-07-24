@@ -6,23 +6,23 @@ const hotelController = require('../controllers/hotelController');
 
 router.post('/createhotel', authentication, verifyUserType('admin'), hotelController.createHotel);
 
-router.get('/findall', hotelController.findAllHotel);
+router.get('/findall', authentication, verifyUserType('admin', 'user', 'guest'), hotelController.findAllHotel);
 
-router.get('/topdeals', hotelController.topDeals);
+router.get('/topdeals', authentication, verifyUserType('admin'), hotelController.topDeals);
 
-router.get('/tophotels', hotelController.topHotelsByState);
+router.get('/tophotels', authentication, verifyUserType('admin', 'user', 'guest'), hotelController.topHotelsByState);
 
-router.get('/hotels-by-cities', hotelController.hotelsByCity);
+router.get('/hotels-by-cities', authentication, verifyUserType('admin', 'user', 'guest'), hotelController.hotelsByCity);
 
-router.get('/topdestinations', hotelController.getTopDestinations);
+router.get('/topdestinations', authentication, verifyUserType('admin', 'user', 'guest'), hotelController.getTopDestinations);
 
 router.get('/findone/:id', authentication, verifyUserType('admin', 'user'), hotelController.findOneHotel);
 
-router.get('/bydate', hotelController.findHotelByDate);
+router.get('/bydate', authentication, verifyUserType('admin', 'user'), hotelController.findHotelByDate);
 
-router.put('/update/:id', verifyUserType('admin'), hotelController.updateHotel);
+router.put('/update/:id', authentication, verifyUserType('admin'), hotelController.updateHotel);
 
-router.delete('/delete/:id', verifyUserType('admin'), hotelController.deleteHotel);
+router.delete('/delete/:id', authentication, verifyUserType('admin'), hotelController.deleteHotel);
 
 
 
