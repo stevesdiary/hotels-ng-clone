@@ -1,6 +1,3 @@
-/**
- * @param {string}
- */
 const  express = require ("express");
 const cloudinary = require("cloudinary").v2;
 const env = require("dotenv").config();
@@ -11,7 +8,7 @@ const app = express();
 const forgotPasswordRoute = require('./routes/forgotPassword')
 const registerRoute = require('./routes/register');
 const loginRoute = require('./routes/login');
-const passwordResetRoute = require('./routes/passwordReset');
+// const passwordResetRoute = require('./routes/passwordReset');
 const userRoute = require('./routes/user');
 const hotelRoute = require('./routes/hotel');
 const roomRoute = require('./routes/room');
@@ -56,7 +53,7 @@ let upload = multer({
 });
 app.use('/', registerRoute);
 app.use('/', loginRoute);
-app.use('/', passwordResetRoute);
+// app.use('/', passwordResetRoute);
 app.use('/', forgotPasswordRoute);
 app.use('/', userRoute);
 app.use('/', hotelRoute);
