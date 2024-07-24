@@ -4,6 +4,7 @@ const loginController = require('../controllers/loginController');
 const { authentication } = require('../middleware/authentication');
 const verifyUserType = require('../middleware/verifyUserType');
 
-router.post('/login', loginController.login); //, authentication(['admin'])
+router.post('/login', loginController.login);
+router.post('/logout', loginController.logout);
 
 module.exports = router;
