@@ -64,7 +64,9 @@ app.use('/', reservationRoute);
 app.get('/test', (req, res) => {
    res.send("Description.")
 })
-
+app.get("/", (req, res) => {
+   res.status(200).json("Welcome to Hotel management platform!")
+})
 // app.post('/cron', async (req, res) =>{
 //    try{
 //       cron.schedule('*/2 * * * *', () => {

@@ -17,8 +17,9 @@ const roomController = {
 
       const hotelId = hotel.id;
       const room = await Room.create({id, hotelId, category, capacity, deals, checkIn, checkOut, description, availability, discount, price, discountedPrice, condition, additionalRequest});
-      // console.log('Data created', room)
-      return res.status(201).send({message: 'Room created successfully', room})
+
+      console.log('Room created', room)
+      return res.status(201).send({message: 'Room created successfully', data: room})
     }
     catch(err){
       console.error('Room not created', err)
@@ -29,7 +30,7 @@ const roomController = {
   getAllRooms: async (req, res) => {
     try{
       const rooms = await Room.findAll();
-      return res.status(200).send({message: 'Records found', rooms});
+      return res.status(200).send({message: 'Records found', data: rooms, error: null});
     }
     catch(err){
       return res.status(500).send({message: 'An error occoured', err});
