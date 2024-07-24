@@ -42,7 +42,7 @@ const loginController = {
 
     }
     catch(err){
-      console.log(err);
+      console.log('error occured' , err);
       return res.status(500).send({Message: `User ${email}unable to login`, Error: err})
     }
   },
