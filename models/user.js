@@ -76,14 +76,14 @@ module.exports = (sequelize, DataTypes) => {
             args: true,
             msg: 'Password cannot be empty',
           },
-          isStrongPassword: (value) => {
-            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-            if (!passwordRegex.test(value)) {
-              console.error('Password:', value);
-              console.error('Validation failed!');
-              throw new Error('Password must be at least 8 characters long and include at least one lowercase letter, one uppercase letter, one numeric digit, and one special character.');
-            }
-          },
+          // isStrongPassword: (value) => {
+          //   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+          //   if (!passwordRegex.test(value)) {
+          //     console.error('Password:', value);
+          //     console.error('Validation failed!');
+          //     throw new Error('Password must be at least 8 characters long and include at least one lowercase letter, one uppercase letter, one numeric digit, and one special character.');
+          //   }
+          // },
         },
       },
       type: {
