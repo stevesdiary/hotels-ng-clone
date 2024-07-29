@@ -8,10 +8,10 @@ const loginController = {
     try{
       const sessions = {}
       const session_id = uuidv4();
-      const {email, password } = req.body;
+      const { email, password } = req.body;
       const userData = await User.findOne({ where: { email: email } });
       if (!userData) {
-        return res.status(404).send({ Message: "Email is not correct or not found!" });
+        return res.status(404).send({ Message: "Email is not registered or profile not found!" });
       }
       const passwordMatch = await bcrypt.compare(password, userData.password);
       if (!passwordMatch) {
@@ -39,7 +39,6 @@ const loginController = {
         type,
         token: accessToken,
       });
-
     }
     catch(err){
       console.log('error occured' , err);
@@ -59,7 +58,6 @@ const loginController = {
       return res.status(500).send({ message: 'An error occoured', error })
     }
   }
-  
 }
 
 module.exports = loginController;
