@@ -60,19 +60,18 @@ const ratingsAdnReviewController = {
   },
 
   updateRating: async (req, res) => {
-    try{
+    try {
       const id = req.params.id;
-      // I think Updatating should take userId and hotelId to alter the record
       const date = moment().format("MMM Do YY");
       const { reviewTitle, review, like, cleanliness, comfort, service, security, location } = req.body;
       const ratings = await RatingAndReview.update({ reviewTitle, date, review, like, cleanliness, comfort, service, security, location}, {where: {id}});
       return res.status(200).send({ message: 'Ratings updated', Record: ratings });
-    }catch(err){
+    } catch(err){
       return res.status(500).send({ message: 'Error occoured', Error: err });
     }
   },
   deleteRating: async (req, res) => {
-    try{
+    try {
       const id = req.params.id;
       const deleteRating = await RatingAndReview.destroy({where: { id }});
       if (deleteRating == 1) {
@@ -82,7 +81,7 @@ const ratingsAdnReviewController = {
         return res.send({ message: `Room with id ${id} does not exist or is deleted in the database` });
       }
     }
-    catch(err){
+    catch(err) {
       return res.status(500).send({ message: 'AN error occoured', Error: err });
     }
   }
