@@ -39,7 +39,6 @@ const passwordResetController = {
         res.status(409).send({message: 'Password do not match, check and try again.'});
       }
       
-      //Set a new password for the user
       const hashed = await bcrypt.hash(newPassword, saltRounds);
       User.password = hashed;
 
@@ -63,12 +62,10 @@ const passwordResetController = {
         console.error(err);
         return res.send(err.message);
       }
-      //throw new Error('Something went wrong')
     } catch (err) {
       console.log({ resetPasswordError: err });
       const errorMessage = err?.message;
-
-      return res.send(errorMessage || "Something went wrong");
+      return res.send(errorMessage || "Something went wrong", err );
     }
   },
 };
